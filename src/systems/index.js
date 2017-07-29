@@ -3,6 +3,7 @@ import PhysicSystem from './PhysicSystem'
 import RenderingSystem from './RenderingSystem'
 import CameraSystem from './CameraSystem'
 import MapSystem from './MapSystem'
+import GUIRenderSystem from './GUIRenderSystem'
 
 
 export default {
@@ -11,5 +12,6 @@ export default {
   RenderingSystem,
   CameraSystem,
   MapSystem,
+  GUIRenderSystem,
 }
 

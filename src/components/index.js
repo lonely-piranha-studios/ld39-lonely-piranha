@@ -4,6 +4,9 @@ import Position from './Position'
 import Shape from './Shape'
 import Sprite from './Sprite'
 import Camera from './Camera'
+import Bar from './Bar'
+import Money from './Money'
+
 
 
 export default {
@@ -13,4 +16,6 @@ export default {
   Shape,
   Sprite,
   Camera,
+  Bar,
+  Money
 }

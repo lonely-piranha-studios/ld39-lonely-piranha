@@ -35,7 +35,9 @@ export default class GameState extends State {
       Component.Position,
       Component.Shape,
       Component.Sprite,
-      Component.Keyboard
+      Component.Keyboard,
+      Component.Bar,
+      Component.Money
     ])
     entity.updateComponents({
       pos: {
@@ -64,9 +66,10 @@ export default class GameState extends State {
       map: new System.MapSystem(this.viewPort),
       physic: new System.PhysicSystem(),
       camera: new System.CameraSystem(this.viewPort),
-
       render: new System.RenderingSystem(this.viewPort, this.sprite),
+      gui: new System.GUIRenderSystem(this.renderer, this.viewPort),
     }
+    //console.log(Object.keys(systems));
     Object.keys(systems).forEach((name) => {
       ecs.addSystem(systems[name])
     })
