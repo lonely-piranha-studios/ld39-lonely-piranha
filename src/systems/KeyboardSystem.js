@@ -12,11 +12,15 @@ export default class KeyboardSystem extends System {
     const input = keyboard.getState()
     const speed = 3
 
-    sprite.previousFacingDirection = sprite.facingDirection
+    sprite.previousAnimationState = sprite.animationState
+
     physic.vel.x = speed * (input.down('right') - input.down('left'))
-    sprite.facingDirection = physic.vel.x === 0 ? sprite.facingDirection : (physic.vel.x < 0 ? 'west' : 'east')
+    sprite.animationState = physic.vel.x === 0 ? sprite.previousAnimationState.split('-')[1] : (physic.vel.x < 0 ? 'west' : 'east')
+    sprite.animationState = ((physic.vel.x === 0 && physic.vel.y === 0) ? 'rest' : 'run') + '-' + sprite.animationState
+
     physic.vel.y = speed * (input.down('down') - input.down('up'))
-    sprite.facingDirection = physic.vel.y === 0 ? sprite.facingDirection : (physic.vel.y < 0 ? 'north' : 'south')
+    sprite.animationState = physic.vel.y === 0 ? sprite.animationState.split('-')[1] : (physic.vel.y < 0 ? 'north' : 'south')
+    sprite.animationState = ((physic.vel.x === 0 && physic.vel.y === 0) ? 'rest' : 'run') + '-' + sprite.animationState
   }
 
 }
