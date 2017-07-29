@@ -14,26 +14,46 @@ class Game {
       width: 800,
       height: 600,
     })
-    const map = new Map(require('assets/maps.json').maps[0])
+    const map = new Map(require('assets/maps.json').maps[1])
     this.viewPort = new ViewPort(this.renderer, map.width * map.tileSize, map.height * map.tileSize)
-
-    this.viewPort.add(map.texture)
 
     this.ecs = new ECS()
     this.systems = this.initSystems(this.ecs)
 
-    this.keyboard = new Keyboard({
+    this.systems.map.setMap(map)
+
+    const entity = new ECS.Entity(null, [
+      Component.Camera,
+      Component.Physic,
+      Component.Position,
+      Component.Shape,
+      Component.Keyboard
+    ])
+    entity.updateComponents({
+      pos: {
+        x: 300, y: 300,
+      },
+      shape: {
+        width: 32, height: 32
+      },
+    })
+    entity.components.keyboard = new Keyboard({
       up:    ['up'],
       down:  ['down'],
       left:  ['left'],
       right: ['right']
     })
+
+    this.ecs.addEntity(entity)
   }
 
   initSystems (ecs) {
     const systems = {
-      keyboard: new System.KeyboardSystem(this.renderer),
-      physic: new System.PhysicSystem(this.renderer),
+      keyboard: new System.KeyboardSystem(),
+      map: new System.MapSystem(this.viewPort),
+      physic: new System.PhysicSystem(),
+      camera: new System.CameraSystem(this.viewPort),
+      render: new System.RenderingSystem(this.viewPort),
     }
     Object.keys(systems).forEach((name) => {
       ecs.addSystem(systems[name])
@@ -55,13 +75,6 @@ class Game {
   }
 
   tick (dt) {
-    const input = this.keyboard.getState()
-    const speed = 3
-    const dx = speed * (input.down('right') - input.down('left'))
-    const dy = speed * (input.down('down') - input.down('up'))
-
-    this.viewPort.move(dx, dy)
-
     this.ecs.update(dt)
     this.viewPort.render(this.renderer)
   }

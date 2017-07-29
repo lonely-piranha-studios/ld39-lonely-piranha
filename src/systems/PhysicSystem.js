@@ -13,8 +13,6 @@ export default class PhysicSystem extends System {
 
     pos.x += vel.x
     pos.y += vel.y
-
-    physic.vel.y = Math.min(12, physic.vel.y + 0.5)
   }
 
 }

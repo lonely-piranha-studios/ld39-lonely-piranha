@@ -1,11 +1,15 @@
 import KeyboardSystem from './KeyboardSystem'
-import TestSystem from './TestSystem'
 import PhysicSystem from './PhysicSystem'
+import RenderingSystem from './RenderingSystem'
+import CameraSystem from './CameraSystem'
+import MapSystem from './MapSystem'
 
 
 export default {
   KeyboardSystem,
-  TestSystem,
   PhysicSystem,
+  RenderingSystem,
+  CameraSystem,
+  MapSystem,
 }
 
