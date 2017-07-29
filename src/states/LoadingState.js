@@ -10,7 +10,7 @@ export default class LoadingState extends State {
     this.renderer = game.renderer
     this.sprite = new Sprite('/assets/spriteatlas.json')
     this.sprite.onLoad = () => {
-      game.states.setState('game')
+      game.states.setState('menu')
     }
     game.sprite = this.sprite
   }
