@@ -1,0 +1,9 @@
+{
+  "presets": [
+    "latest"
+  ],
+  "plugins": [
+    "transform-class-constructor-call",
+    "transform-class-properties"
+  ]
+}
