@@ -64,5 +64,5 @@ gulp.task('spriteatlas', () => {
       algorithm: 'binary-tree',
       cssTemplate: texturePackerTemplate,
     }))
-    .pipe(gulp.dest('./src/assets/'))
+    .pipe(gulp.dest('./dist/assets/'))
 })

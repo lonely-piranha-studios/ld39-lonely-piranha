@@ -15,6 +15,8 @@ const Shape = {
     color: getRandomColor(),
     width: 40,
     height: 40,
+    facingDirection: 'east',
+    previousFacingDirection: 'east',
   })
 }
 
