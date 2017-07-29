@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "gulp": "gulp",
-    "dev": "npm run gulp sprite && webpack-dev-server --config webpack.config.js",
+    "dev": "webpack-dev-server --config webpack.config.js",
     "build": "npm run gulp sprite && webpack --config webpack.config.js"
   },
   "devDependencies": {
