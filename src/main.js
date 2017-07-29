@@ -10,6 +10,7 @@ class Game {
     this.renderer = autoDetectRenderer({
       width: 800,
       height: 600,
+      transparent: true
     })
 
     this.states = new StateMachine()
@@ -19,7 +20,7 @@ class Game {
     this.states.addState('menu', new State.MenuState(this))
     this.states.addState('game', new State.GameState(this))
 
-    this.states.setState('game')
+    this.states.setState('menu')
   }
 
   run () {
