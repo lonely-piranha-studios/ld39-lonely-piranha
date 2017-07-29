@@ -1,21 +1,37 @@
 import ECS from 'ecs'
-import { autoDetectRenderer } from 'pixi'
+import { autoDetectRenderer, Container } from 'pixi'
+import { Keyboard } from 'core/input'
+import { ViewPort } from 'core/gfx'
 import System from 'systems'
 import Component from 'components'
+import Map from 'world/Map'
 
 
 class Game {
 
   constructor () {
-    this.renderer = autoDetectRenderer(800, 600)
+    this.renderer = autoDetectRenderer({
+      width: 800,
+      height: 600,
+    })
+    const map = new Map(require('assets/maps.json').maps[0])
+    this.viewPort = new ViewPort(this.renderer, map.width * map.tileSize, map.height * map.tileSize)
+
+    this.viewPort.add(map.texture)
 
     this.ecs = new ECS()
     this.systems = this.initSystems(this.ecs)
+
+    this.keyboard = new Keyboard({
+      up:    ['up'],
+      down:  ['down'],
+      left:  ['left'],
+      right: ['right']
+    })
   }
 
   initSystems (ecs) {
     const systems = {
-      test: new System.TestSystem(this.renderer),
     }
     Object.keys(systems).forEach((name) => {
       ecs.addSystem(systems[name])
@@ -37,8 +53,15 @@ class Game {
   }
 
   tick (dt) {
+    const input = this.keyboard.getState()
+    const speed = 3
+    const dx = speed * (input.down('right') - input.down('left'))
+    const dy = speed * (input.down('down') - input.down('up'))
+
+    this.viewPort.move(dx, dy)
+
     this.ecs.update(dt)
-    this.renderer.clear(0xFFFFFF)
+    this.viewPort.render(this.renderer)
   }
 
 }

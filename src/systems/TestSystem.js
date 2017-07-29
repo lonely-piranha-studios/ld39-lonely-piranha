@@ -4,18 +4,15 @@ import { Graphics } from 'pixi'
 
 export default class TestSystem extends System {
 
-  constructor (renderer) {
+  constructor (viewPort) {
     super()
-    this.renderer = renderer
 
     const g = this.graphic = new Graphics()
 
     g.beginFill(0xff0000)
-    g.drawRect(10, 10, 300, 300)
-  }
+    g.drawRect(150, 150, 300, 300)
 
-  preUpdate () {
-    this.renderer.render(this.graphic)
+    viewPort.add(g)
   }
 
 }
