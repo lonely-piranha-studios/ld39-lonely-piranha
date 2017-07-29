@@ -22,6 +22,7 @@ const texturePackerTemplate = (params) => {
 	}
 
 	items.forEach((item) => {
+    // SMELL but yeah
     const path = item.source_image.split('gfx/')[1]
     
 		frames[path] = {
