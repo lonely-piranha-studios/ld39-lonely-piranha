@@ -34,7 +34,7 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HTMLWebpackPlugin({
-      title: 'Lonely Piranha LD39'
+      template: path.resolve(__dirname, 'src', 'index.html')
     }),
   ],
 
