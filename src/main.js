@@ -1,10 +1,7 @@
-import ECS from 'ecs'
-import { autoDetectRenderer, Container } from 'pixi'
-import { Keyboard } from 'core/input'
-import { ViewPort } from 'core/gfx'
-import System from 'systems'
-import Component from 'components'
-import Map from 'world/Map'
+import StateMachine from 'core/state'
+import { autoDetectRenderer } from 'pixi'
+import State from 'states'
+import clamp from 'lodash.clamp'
 
 
 class Game {
@@ -14,69 +11,39 @@ class Game {
       width: 800,
       height: 600,
     })
-    const map = new Map(require('assets/maps.json').maps[1])
-    this.viewPort = new ViewPort(this.renderer, map.width * map.tileSize, map.height * map.tileSize)
 
-    this.ecs = new ECS()
-    this.systems = this.initSystems(this.ecs)
+    this.states = new StateMachine()
 
-    this.systems.map.setMap(map)
+    this.states.addState('loading', new State.LoadingState(this))
+    this.states.addState('splash', new State.SplashState(this))
+    this.states.addState('menu', new State.MenuState(this))
+    this.states.addState('game', new State.GameState(this))
 
-    const entity = new ECS.Entity(null, [
-      Component.Camera,
-      Component.Physic,
-      Component.Position,
-      Component.Shape,
-      Component.Keyboard
-    ])
-    entity.updateComponents({
-      pos: {
-        x: 300, y: 300,
-      },
-      shape: {
-        width: 32, height: 32
-      },
-    })
-    entity.components.keyboard = new Keyboard({
-      up:    ['up'],
-      down:  ['down'],
-      left:  ['left'],
-      right: ['right']
-    })
-
-    this.ecs.addEntity(entity)
-  }
-
-  initSystems (ecs) {
-    const systems = {
-      keyboard: new System.KeyboardSystem(),
-      map: new System.MapSystem(this.viewPort),
-      physic: new System.PhysicSystem(),
-      camera: new System.CameraSystem(this.viewPort),
-      render: new System.RenderingSystem(this.viewPort),
-    }
-    Object.keys(systems).forEach((name) => {
-      ecs.addSystem(systems[name])
-    })
-    return systems
+    this.states.setState('game')
   }
 
   run () {
     if (this.running) return
     this.running = true
 
-    let then = performance.now()
+    let then = false
+    let inv = 60/1000
     const loop = now => {
       if (this.running) requestAnimationFrame(loop)
-      this.tick(now - then)
+      if (!then) then = now - 1000/60
+      const dt = now - then
+      this.tick(clamp(dt * inv, 0, 3))
       then = now
     }
     requestAnimationFrame(loop)
   }
 
+  stop () {
+    this.running = false
+  }
+
   tick (dt) {
-    this.ecs.update(dt)
-    this.viewPort.render(this.renderer)
+    this.states.current.tick(dt)
   }
 
 }
