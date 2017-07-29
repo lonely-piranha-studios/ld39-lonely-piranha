@@ -1,11 +1,11 @@
 import KeyboardSystem from './KeyboardSystem'
-import TestSystem from './TestSystem'
 import PhysicSystem from './PhysicSystem'
+import TestSystem from './TestSystem'
 
 
 export default {
   KeyboardSystem,
-  TestSystem,
   PhysicSystem,
+  TestSystem,
 }
 
