@@ -92,12 +92,8 @@ export default class Map {
       const x = i % this.width
       const y = Math.floor(i / this.width)
       const n = this.getNeighbors(x, y, t)
-      if (!bitmask[n]) {
-        console.log('N', n, 'X:', x, 'Y:', y);
-      }
       return (t * 47) + bitmask[n]
     });
-    console.log(tilesTest);
   }
 
   dispose () {
