@@ -42,8 +42,11 @@ export default class GameState extends State {
         x: 300, y: 300,
       },
       shape: {
-        width: 32, height: 32
+        width: 32, height: 32,
       },
+      sprite: {
+        namespace: 'character',
+      }
     })
     entity.components.keyboard = new Keyboard({
       up:    ['up'],

@@ -18,12 +18,11 @@ export default class RenderingSystem extends System {
   enter (entity) {
     const { pos, sprite } = entity.components
     const {
-      animationStateFrames,
+      namespace,
       animationState,
     } = sprite
 
-    const frameCount = animationStateFrames[animationState.split('-')[0]]
-    const textures = this.sprite.getFrameSet(`character/${animationState}`, frameCount)
+    const textures = this.sprite.getFrameSet(`${namespace}/${animationState}`)
     const g = new AnimatedSprite(textures)
     g.x = pos.x
     g.y = pos.y
@@ -47,7 +46,7 @@ export default class RenderingSystem extends System {
   update (entity) {
     const { pos, sprite } = entity.components
     const {
-      animationStateFrames,
+      namespace,
       animationState,
       previousAnimationState,
     } = sprite
@@ -55,8 +54,7 @@ export default class RenderingSystem extends System {
     sprite.graphic.x = pos.x
     sprite.graphic.y = pos.y
     if (animationState !== previousAnimationState) {
-      const frameCount = animationStateFrames[animationState.split('-')[0]]
-      const textures = this.sprite.getFrameSet(`character/${animationState}`, frameCount)
+      const textures = this.sprite.getFrameSet(`${namespace}/${animationState}`)
       sprite.graphic.textures = textures
       sprite.graphic.play()
     }
