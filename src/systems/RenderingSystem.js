@@ -1,12 +1,14 @@
 import { System } from 'ecs'
-import { Graphics } from 'pixi'
+import { Graphics, extras } from 'pixi'
+const { AnimatedSprite } = extras
 
 
 export default class RenderingSystem extends System {
 
-  constructor (viewPort) {
+  constructor (viewPort, sprite) {
     super()
     this.viewPort = viewPort
+    this.sprite = sprite
   }
 
   test (entity) {
@@ -16,11 +18,12 @@ export default class RenderingSystem extends System {
   enter (entity) {
     const { pos, shape } = entity.components
 
-    const g = new Graphics()
-    g.beginFill(0x00ffff)
-    g.drawRect(0, 0, shape.width, shape.height)
+    const g = new AnimatedSprite(this.sprite.getFrameSet('character/run-east', 4))
     g.x = pos.x
     g.y = pos.y
+    g.anchor.set(0.5);
+    g.animationSpeed = 0.1;
+    g.play()
 
     entity.updateComponent('shape', {
       graphic: g

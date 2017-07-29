@@ -17,6 +17,7 @@ export default class GameState extends State {
 
     this.renderer = game.renderer
     this.viewPort = new ViewPort(this.renderer)
+    this.sprite = game.sprite
   }
 
   enter () {
@@ -59,7 +60,8 @@ export default class GameState extends State {
       map: new System.MapSystem(this.viewPort),
       physic: new System.PhysicSystem(),
       camera: new System.CameraSystem(this.viewPort),
-      render: new System.RenderingSystem(this.viewPort),
+
+      render: new System.RenderingSystem(this.viewPort, this.sprite),
     }
     Object.keys(systems).forEach((name) => {
       ecs.addSystem(systems[name])

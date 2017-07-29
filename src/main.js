@@ -19,7 +19,7 @@ class Game {
     this.states.addState('menu', new State.MenuState(this))
     this.states.addState('game', new State.GameState(this))
 
-    this.states.setState('game')
+    this.states.setState('loading')
   }
 
   run () {
