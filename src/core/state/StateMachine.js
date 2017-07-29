@@ -16,13 +16,13 @@ export default class StateMachine {
   }
 
   setState (name) {
-    this.nextState = name
+    this._nextState = name
   }
 
   get current () {
     if (this._nextState) {
       if (this._current) this._current.exit()
-      this._current = this._states[this.nextState]
+      this._current = this._states[this._nextState]
       this._current.enter()
       this._nextState = false
     }
