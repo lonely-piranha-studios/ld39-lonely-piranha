@@ -34,6 +34,7 @@ export default class GameState extends State {
       Component.Physic,
       Component.Position,
       Component.Shape,
+      Component.Sprite,
       Component.Keyboard
     ])
     entity.updateComponents({

@@ -12,14 +12,13 @@ export default class RenderingSystem extends System {
   }
 
   test (entity) {
-    return ['pos', 'shape'].every(comp => entity.components.hasOwnProperty(comp))
+    return ['pos', 'sprite'].every(comp => entity.components.hasOwnProperty(comp))
   }
 
   enter (entity) {
-    const { pos, shape } = entity.components
+    const { pos, sprite } = entity.components
 
-    const textures = this.sprite.getFrameSet(`character/run-${shape.facingDirection}`, 4)
-    console.log(textures)
+    const textures = this.sprite.getFrameSet(`character/run-${sprite.facingDirection}`, 4)
     const g = new AnimatedSprite(textures)
     g.x = pos.x
     g.y = pos.y
@@ -27,7 +26,7 @@ export default class RenderingSystem extends System {
     g.animationSpeed = 0.1;
     g.play()
 
-    entity.updateComponent('shape', {
+    entity.updateComponent('sprite', {
       graphic: g
     })
 
@@ -35,19 +34,19 @@ export default class RenderingSystem extends System {
   }
 
   exit (entity) {
-    const { shape } = entity.components
-    this.viewPort.remove(shape.graphic)
-    shape.graphic = undefined
+    const { sprite } = entity.components
+    this.viewPort.remove(sprite.graphic)
+    sprite.graphic = undefined
   }
 
   update (entity) {
-    const { pos, shape } = entity.components
-    shape.graphic.x = pos.x
-    shape.graphic.y = pos.y
-    if (shape.facingDirection !== shape.previousFacingDirection) {
-      const textures = this.sprite.getFrameSet(`character/run-${shape.facingDirection}`, 4)
-      shape.graphic.textures = textures
-      shape.graphic.play()
+    const { pos, sprite } = entity.components
+    sprite.graphic.x = pos.x
+    sprite.graphic.y = pos.y
+    if (sprite.facingDirection !== sprite.previousFacingDirection) {
+      const textures = this.sprite.getFrameSet(`character/run-${sprite.facingDirection}`, 4)
+      sprite.graphic.textures = textures
+      sprite.graphic.play()
     }
   }
 
