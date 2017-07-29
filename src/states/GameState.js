@@ -13,7 +13,7 @@ import Map from 'world/Map'
 export default class GameState extends State {
 
   constructor (game) {
-    super('game')
+    super()
 
     this.renderer = game.renderer
     this.viewPort = new ViewPort(this.renderer)
