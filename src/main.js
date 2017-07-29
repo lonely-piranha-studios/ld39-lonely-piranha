@@ -15,8 +15,9 @@ class Game {
 
   initSystems (ecs) {
     const systems = {
-      test: new System.TestSystem(this.renderer),
+      keyboard: new System.KeyboardSystem(this.renderer),
       physic: new System.PhysicSystem(this.renderer),
+      test: new System.TestSystem(this.renderer),
     }
     Object.keys(systems).forEach((name) => {
       ecs.addSystem(systems[name])
