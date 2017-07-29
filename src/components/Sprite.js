@@ -3,8 +3,8 @@ const Sprite = {
 
   getDefaults: () => ({
     namespace: null,
-    animationState: 'rest-east',
-    previousAnimationState: 'rest-east',
+    animationState: 'east-rest',
+    previousAnimationState: 'east-rest',
   })
 }
 
