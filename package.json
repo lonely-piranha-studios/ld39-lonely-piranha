@@ -22,5 +22,13 @@
     "url-loader": "^0.5.9",
     "webpack": "^3.4.1",
     "webpack-dev-server": "^2.6.1"
+  },
+  "dependencies": {
+    "circular-buffer": "^1.0.2",
+    "collide-2d-aabb-tilemap": "^1.0.0",
+    "fscreen": "^1.0.1",
+    "keycode": "^2.1.9",
+    "pixi.js": "^4.5.4",
+    "yagl-ecs": "^1.1.0"
   }
 }

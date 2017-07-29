@@ -38,6 +38,14 @@ module.exports = {
     }),
   ],
 
+  resolve: {
+    alias: {
+      ecs: 'yagl-ecs',
+      pixi: 'pixi.js',
+    },
+    modules: ['node_modules', path.join(__dirname, 'src')]
+  },
+
   devServer: {
     port: 1337,
     clientLogLevel:     'error',
