@@ -1,0 +1,8 @@
+{
+  "name": "ld39-lonely-piranha",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:lonely-piranha-studios/ld39-lonely-piranha.git",
+  "author": "Max Wihlborg <max.wihlborg@ispy.se>",
+  "license": "MIT"
+}
