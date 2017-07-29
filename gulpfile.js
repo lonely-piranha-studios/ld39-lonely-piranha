@@ -23,7 +23,7 @@ const texturePackerTemplate = (params) => {
 
 	items.forEach((item) => {
     // SMELL but yeah
-    const path = item.source_image.split('gfx/')[1]
+    const path = item.source_image.split('sprites/')[1]
     
 		frames[path] = {
 			frame: {
@@ -55,9 +55,9 @@ gulp.task('default', () => {
   console.log('default task')
 })
 
-gulp.task('sprite', () => {
+gulp.task('spriteatlas', () => {
   return gulp
-    .src(`./src/gfx/**/*.png`)
+    .src(`./src/sprites/**/*.png`)
     .pipe(spritesmith({
       imgName: `spriteatlas.png`,
       cssName: `spriteatlas.json`,
