@@ -1,85 +1,6 @@
 import { utils, Container, Texture, Sprite } from 'pixi'
 
-const bitmask = {
-  '2': 1,
-  '8': 2,
-  '10': 3,
-  '11': 4,
-  '16': 5,
-  '18': 6,
-  '22': 7,
-  '24': 8,
-  '26': 9,
-  '27': 10,
-  '30': 11,
-  '31': 12,
-  '64': 13,
-  '66': 14,
-  '72': 15,
-  '74': 16,
-  '75': 17,
-  '80': 18,
-  '82': 19,
-  '86': 20,
-  '88': 21,
-  '90': 22,
-  '91': 23,
-  '94': 24,
-  '95': 25,
-  '104': 26,
-  '106': 27,
-  '107': 28,
-  '111': 28,
-  '235': 28,
-  '120': 29,
-  '122': 30,
-  '123': 31,
-  '126': 32,
-  '127': 33,
-  '208': 34,
-  '210': 35,
-  '214': 36,
-  '215': 36,
-  '216': 37,
-  '218': 38,
-  '219': 39,
-  '222': 40,
-  '223': 41,
-  '244': 34,
-  '248': 42,
-  '246': 36,
-  '249': 42,
-  '250': 43,
-  '251': 44,
-  '252': 42,
-  '254': 45,
-  '255': 46,
-  212: 34,
-  '0': 47,
-  159: 12,
-  63: 12,
-  150: 7,
-  232: 26,
-  105: 26,
-  240: 34,
-  140: 48,
-  128: 48,
-  130: 48,
-  101: 48,
-  106: 48,
-  98: 48,
-  122: 48,
-  120: 48,
-  136: 48,
-  139: 48,
-  15: 4,
-  43: 4,
-  23: 7,
-}
-
-const t = 24
-const waterTile = 21 + t * 9;
-const tilesetMap = {
+/* const tilesetMap = {
   0: {
     46: 1 + t,
     12: 6 + t,
@@ -91,37 +12,89 @@ const tilesetMap = {
     7: 8 + t * 3,
     26: 9,
     34: 8,
-    14: 1 + t,
-    13: 1 + t,
+    14: 11 + t,
+    13: 11,
     44: 5 + t * 3,
     45: 7 + t * 3,
     33: 5 + t,
     41: 7 + t,
-    48: 1 + t,
-  },
-  2: {
-    46: waterTile,
-    12: waterTile,
-    28: waterTile,
-    10: waterTile,
-    36: waterTile,
-    42: waterTile,
-    4: waterTile,
-    2: waterTile,
-    11: waterTile,
-    17: waterTile,
-    7: waterTile,
-    8: waterTile,
-    26: waterTile,
-    34: waterTile,
-    14: waterTile,
-    13: waterTile,
-    44: waterTile,
-    45: waterTile,
-    33: waterTile,
-    41: waterTile,
-    48: waterTile,
+    48: 11 + t,
+    49: 1 + t,
+    1: 11 + t * 2,
+    3: 11 + t * 2,
+    192: 11,
+    13: 11,
+    24: 11 + t * 3,
+    8: 10 + t * 2,
+    56: 10 + t * 3,
+    144: 10 + t * 4,
   }
+}
+*/
+const spriteSheetWidth = 24
+
+const waterTile = [21, 10]
+const voidTile = [1, 1]
+const block = [10, 4]
+
+const wallTop = [6, 1]
+const wallBottom = [6, 3]
+const wallRight = [7, 2]
+const wallLeft = [5, 2]
+const wallHorizontal = [11, 3]
+const wallVertical = [11, 1]
+const cornerTopLeft = [5, 1]
+const cornerTopRight = [7, 1]
+const cornerBottomLeft = [5, 3]
+const cornerBottomRight = [7, 3]
+const edgeTopLeft = [8, 0]
+const edgeTopRight = [9, 0]
+const edgeBottomLeft = [8, 3]
+const edgeBottomRight = [9, 3]
+
+const notFoundTile = block[1] * spriteSheetWidth + block[0]
+
+const bitMaskMap = {
+  0: block,
+  255: voidTile,
+  31: wallTop,
+    63: wallTop,
+    159: wallTop,
+    191: wallTop,
+  249: wallBottom,
+    248: wallBottom,
+    252: wallBottom,
+  246: wallRight,
+    214: wallRight,
+    215: wallRight,
+    247: wallRight,
+  111: wallLeft,
+    107: wallLeft,
+    235: wallLeft,
+    239: wallLeft,
+  127: cornerTopLeft,
+    216: cornerTopLeft,
+  223: cornerTopRight,
+  251: cornerBottomLeft,
+  254: cornerBottomRight,
+    27: cornerBottomRight,
+  208: edgeTopLeft,
+    240: edgeTopLeft,
+    244: edgeTopLeft,
+  120: edgeTopRight,
+    104: edgeTopRight,
+    232: edgeTopRight,
+    233: edgeTopRight,
+    125: edgeTopRight,
+    106: edgeTopRight,
+  22: edgeBottomLeft,
+    151: edgeBottomLeft,
+    23: edgeBottomLeft,
+    62: edgeBottomLeft,
+  11: edgeBottomRight,
+    15: edgeBottomRight,
+    47: edgeBottomRight,
+    75: edgeBottomRight,
 }
 
 export default class MapChunkLoader {
@@ -151,44 +124,37 @@ export default class MapChunkLoader {
     ctx.fillStyle = 'HSLA(138, 16%, 63%, 1.00)'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     ctx.fillStyle = '#f00'
+    ctx.font="8px Arial";
 
     const x_tiles = this.img.width / tileSize
     const y_tiles = this.img.height / tileSize
 
-    const autoTiles = this.tiles.map((t, i) => {
+    const bitMasks = this.tiles.map((tile, i) => {
       const x = i % this.width
       const y = Math.floor(i / this.width)
-      const n = this.getNeighbors(x, y, t)
-
-      if (t === 1) return 'continue'
-
-      const out = bitmask[n] || t
-
-      if (!out) {
-        return n
-      }
-
-      return out
+      return this.getNeighbors(x, y, tile)
     })
 
     for (let i = 0; i < this.tiles.length; i++) {
-      const l = this.tiles[i]
-      const m = autoTiles[i]
-      const t = (tilesetMap[l] && tilesetMap[l][m]) || m
-      if (t === 'continue') continue
-
-      const tx = t % x_tiles
-      const ty = t / x_tiles << 0
-
+      const tileType = this.tiles[i]
+      if (tileType === 1) continue // Normal ground, nothing to draw
+      if (tileType === 2) continue // Water, skip for now
+      const tileBitmask = bitMasks[i];
+      const tile = (bitMaskMap[tileBitmask] && bitMaskMap[tileBitmask][1] * spriteSheetWidth + bitMaskMap[tileBitmask][0])
+        || notFoundTile;
       const x = i % width
       const y = i / width << 0
 
-      ctx.drawImage(this.img,
-        tileSize * tx, tileSize * ty, tileSize, tileSize,
-        x * tileSize, y * tileSize, tileSize, tileSize
-      )
-      if (false) {
-        ctx.fillText(m, x * tileSize, y * tileSize + 10)
+      if (tile) {
+        const tx = tile % x_tiles
+        const ty = tile / x_tiles << 0
+        ctx.drawImage(this.img,
+          tileSize * tx, tileSize * ty, tileSize, tileSize,
+          x * tileSize, y * tileSize, tileSize, tileSize
+        )
+      } 
+      if (!tile || tile === notFoundTile){
+        ctx.fillText(tileBitmask, x * tileSize, y * tileSize + 10)
       }
     }
 
