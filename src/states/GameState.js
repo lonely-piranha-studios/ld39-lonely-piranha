@@ -53,9 +53,9 @@ export default class GameState extends State {
       },
       sprite: {
         namespace: 'character',
-        anchor: { x: 0, y: 0.5 },
-        scale: { x: 0.25, y: 0.25 },
-        animationSpeed: 0.5,
+        anchor: { x: 0.25, y: 0.5 },
+        scale: { x: 0.5, y: 0.5 },
+        animationSpeed: 0.3,
         animationState: 'east-rest',
         previousAnimationState: 'east-rest',
       }
