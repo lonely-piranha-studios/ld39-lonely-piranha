@@ -1,5 +1,16 @@
 import collideAabbTilemap from 'collide-2d-aabb-tilemap'
-import { Graphics, RenderTexture, Container, Sprite, autoDetectRenderer } from 'pixi'
+import { Entity } from 'ecs'
+import {
+  Graphics,
+  RenderTexture,
+  Texture,
+  Container,
+  Sprite,
+  autoDetectRenderer,
+} from 'pixi'
+
+import Component from 'components'
+
 
 const bitmask = {
   '2': 1,
@@ -66,6 +77,7 @@ export default class Map {
     this.height = data.height
     this.tileSize = tileSet.tileSize
     this.tiles = data.tiles
+    this.objects = data.objects
 
     this.collision = data.collision
     this.collider = collideAabbTilemap((x, y) => this.collision[x + y*this.width], this.tileSize, [this.width, this.height])
@@ -92,6 +104,28 @@ export default class Map {
       g.drawRect(x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
       g.endFill();
       // container.addChild(s)
+    }
+
+    for (let i = 0; i < this.objects.length; i++) {
+      const d = this.objects[i]
+      const x = i % this.width * this.tileSize
+      const y = Math.floor(i/this.width) * this.tileSize
+
+
+      const o = new Entity(null, [
+        Component.Position,
+        Component.Shape,
+        Component.Sprite,
+      ])
+
+      o.updateComponents({
+        pos: { x: x, y: y },
+        shape: { width: this.tileSize, height: this.tileSize },
+        sprite: { namespace: `tiles/${d.type}` },
+      })
+      o.components.sprite.graphic = new Sprite(Texture.fromFrame(o.components.sprite.namespace + '.png'))
+
+      container.addChild(o.components.sprite.graphic)
     }
 
     /*

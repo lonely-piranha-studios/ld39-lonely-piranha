@@ -52,6 +52,8 @@ export default class GameState extends State {
         namespace: 'character',
         anchor: { x: 0, y: 0.5 },
         animationSpeed: 0.1,
+        animationState: 'east-rest',
+        previousAnimationState: 'east-rest',
       }
     })
     entity.components.keyboard = new Keyboard({
