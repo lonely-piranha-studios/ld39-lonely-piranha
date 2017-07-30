@@ -1,7 +1,9 @@
 import StateMachine from 'core/state'
 import { autoDetectRenderer } from 'pixi'
+import { createStore, combineReducers } from 'redux'
 import State from 'states'
 import clamp from 'lodash.clamp'
+import triggers from 'triggers'
 import MapChunkLoader from 'world/MapChunkLoader'
 
 
@@ -14,6 +16,7 @@ class Game {
       transparent: true,
     })
 
+    this.store = createStore(combineReducers(triggers))
     this.states = new StateMachine()
 
     this.states.addState('loading', new State.LoadingState(this))
