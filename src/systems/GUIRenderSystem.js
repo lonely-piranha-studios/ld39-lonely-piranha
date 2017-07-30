@@ -58,10 +58,6 @@ export default class GUIRenderSystem extends System {
     this.viewPort.add(this.stage)
   }
 
-  postUpdate () {
-    this.renderer.render(this.stage)
-  }
-
   update (entity) {
     const { backgroundGraphic, foregroundGraphic } = entity.components.bar
 
@@ -82,8 +78,8 @@ export default class GUIRenderSystem extends System {
 
     let { moneyLabel } = entity.components.money
 
-    moneyLabel.x = 20 + this.viewPort.position.x
-    moneyLabel.y = 40 + this.viewPort.position.y
+    moneyLabel.x = 20 + this.viewPort.position.x * this.viewPort.zoom
+    moneyLabel.y = 40 + this.viewPort.position.y * this.viewPort.zoom
 
     moneyLabel.text = `€${entity.components.money.amount}`
 

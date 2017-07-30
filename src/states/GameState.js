@@ -46,7 +46,7 @@ export default class GameState extends State {
         x: 64 * 300, y: 64 * 300,
       },
       shape: {
-        width: 32, height: 32,
+        width: 8, height: 8,
       },
       sprite: {
         namespace: 'character',
@@ -73,7 +73,6 @@ export default class GameState extends State {
       render: new System.RenderingSystem(this.viewPort, this.sprite),
       gui: new System.GUIRenderSystem(this.renderer, this.viewPort),
     }
-    //console.log(Object.keys(systems));
     Object.keys(systems).forEach((name) => {
       ecs.addSystem(systems[name])
     })

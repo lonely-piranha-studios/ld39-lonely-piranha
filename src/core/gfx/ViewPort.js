@@ -30,6 +30,8 @@ export default class ViewPort {
   }
 
   view (width, height, offset) {
+    this._width = width
+    this._height = height
     this.width = width
     this.height = height
 
@@ -42,7 +44,7 @@ export default class ViewPort {
   }
 
   moveToCenter (x, y, alpha) {
-    this.moveTo(x - this.renderWidth / 2, y - this.renderHeight / 2, alpha)
+    this.moveTo(x - this.renderWidth / 2 / this.zoom, y - this.renderHeight / 2 / this.zoom, alpha)
   }
 
   moveTo (x, y, alpha = 0) {
@@ -62,6 +64,8 @@ export default class ViewPort {
   }
 
   zoomTo (zoom) {
+    this._width = this.width * zoom
+    this._height = this.height * zoom
     this.stage.scale.x = zoom
     this.stage.scale.y = zoom
   }
@@ -93,19 +97,19 @@ export default class ViewPort {
   }
 
   recalculate () {
-    if (this.width && this.height) {
+    if (this._width && this._height && false) {
       const min_x = this.offset.x
       const min_y = this.offset.y
 
-      const max_x = this.offset.x + this.width - this.renderWidth
-      const max_y = this.offset.y + this.height - this.renderHeight
+      const max_x = this.offset.x + this._width - this.renderWidth
+      const max_y = this.offset.y + this._height - this.renderHeight
 
       this.position.x = clamp(this.position.x, min_x, max_x)
       this.position.y = clamp(this.position.y, min_y, max_y)
     }
 
-    this.stage.x = -this.position.x
-    this.stage.y = -this.position.y
+    this.stage.x = -this.position.x * this.zoom
+    this.stage.y = -this.position.y * this.zoom
   }
 
 }
