@@ -43,7 +43,7 @@ export default class GameState extends State {
     ])
     entity.updateComponents({
       pos: {
-        x: 16 * 100, y: 16 * 100,
+        x: 16 * 300, y: 16 * 300,
       },
       shape: {
         width: 8, height: 8,
