@@ -16,10 +16,11 @@ export default class RenderingSystem extends System {
   }
 
   enter (entity) {
-    const { pos, sprite } = entity.components
+    const { pos, sprite, shape } = entity.components
     const {
       namespace,
       anchor,
+      scale,
       animationSpeed,
       animationState,
     } = sprite
@@ -28,6 +29,8 @@ export default class RenderingSystem extends System {
     const g = new AnimatedSprite(textures)
     g.x = pos.x
     g.y = pos.y
+    g.scale.x = scale.x
+    g.scale.y = scale.y
     g.anchor.set(anchor.x, anchor.y);
     g.animationSpeed = animationSpeed;
     g.play()
