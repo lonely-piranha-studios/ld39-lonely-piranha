@@ -73,18 +73,10 @@ export default class Map {
     const size = this.tileSize
     const container = new Container()
 
-<<<<<<< HEAD
     const tilemap = {
       0: 24 * 1 + 1,
       1: 24 * 2 + 6,
       2: 24 * 2 + 6,
-=======
-    const tileSet = {
-      0: 0xff0000,
-      1: 0xffcccc,
-      2: 0x0000ff,
-      // 3: 0x00ff00,
->>>>>>> Don't know
     }
 
     for (let i = 0; i < this.tiles.length; i++) {
