@@ -7,7 +7,7 @@ import { State } from 'core/state'
 
 import System from 'systems'
 import Component from 'components'
-import Map from 'world/Map'
+import MapGenerator from 'world/MapGenerator'
 
 
 export default class GameState extends State {
@@ -18,10 +18,11 @@ export default class GameState extends State {
     this.renderer = game.renderer
     this.viewPort = new ViewPort(this.renderer)
     this.sprite = game.sprite
+    this.mapGenerator = new MapGenerator()
   }
 
   enter () {
-    const map = new Map(require('assets/maps.json').maps[1], new TileSet('tilesets/dungeon.png'))
+    const map = this.mapGenerator.createMap({ debug: true, tileset: new TileSet('tilesets/dungeon.png') });
     this.viewPort.view(map.width * map.tileSize, map.height * map.tileSize)
     this.viewPort.zoomTo(4)
 
@@ -42,7 +43,7 @@ export default class GameState extends State {
     ])
     entity.updateComponents({
       pos: {
-        x: 300, y: 300,
+        x: 64 * 300, y: 64 * 300,
       },
       shape: {
         width: 32, height: 32,
