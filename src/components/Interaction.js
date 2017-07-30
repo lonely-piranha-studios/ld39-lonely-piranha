@@ -6,7 +6,7 @@ const Interaction = {
   getDefaults: () => ({
     x: [0, 0],
     y: [0, 0],
-    action: () => {
+    onInteraction: () => {
       console.log('TRIGGERED')
     },
   })
