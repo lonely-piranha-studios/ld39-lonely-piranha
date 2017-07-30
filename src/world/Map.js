@@ -71,23 +71,27 @@ export default class Map {
     this.collider = collideAabbTilemap((x, y) => this.collision[x + y*this.width], this.tileSize, [this.width, this.height])
 
     const size = this.tileSize
-    const container = new Container()
+    const g = new Graphics()
 
     const tilemap = {
-      0: 24 * 1 + 1,
-      1: 24 * 2 + 6,
-      2: 24 * 2 + 6,
+      0: 0x2f293a,
+      1: 0x92b09b,
+      2: 0x83f3f2,
     }
 
     for (let i = 0; i < this.tiles.length; i++) {
-      const s = new Sprite(tileSet.tiles[tilemap[this.tiles[i]] || this.tiles[i]])
+      // const s = new Sprite(tileSet.tiles[tilemap[this.tiles[i]] || this.tiles[i]])
+      // s.y = y * this.tileSize
+      const t = this.tiles[i]
       const x = i % this.width
       const y = Math.floor(i/this.width)
 
-      s.x = x * this.tileSize
-      s.y = y * this.tileSize
-
-      container.addChild(s)
+      // s.x = x * this.tileSize
+      // s.y = y * this.tileSize
+      g.beginFill(tilemap[t]);
+      g.drawRect(x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
+      g.endFill();
+      // container.addChild(s)
     }
 
     /*
@@ -98,7 +102,7 @@ export default class Map {
       return (t * 47) + bitmask[n]
     });
     */
-    this.texture = container
+    this.texture = g
   }
 
   dispose () {
