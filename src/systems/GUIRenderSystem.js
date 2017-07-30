@@ -2,88 +2,90 @@ import { System } from 'yagl-ecs'
 import { Graphics, Container } from 'pixi.js'
 
 export default class GUIRenderSystem extends System {
-	constructor (renderer, viewPort) {
-		super()
-		this.renderer = renderer
-		this.viewPort = viewPort
-		this.height = 20
-		this.x = 20
-		this.y = 20
-		this.fuelColor = 0x44ff44
-		this.borderColor = 0x000000
-	}
+  constructor (renderer, viewPort) {
+    super()
+    this.renderer = renderer
+    this.viewPort = viewPort
+    this.height = 20
+    this.x = 20
+    this.y = 20
+    this.fuelColor = 0x44ff44
+    this.borderColor = 0x000000
+  }
 
-	test (entity) {
-		return !!entity.components.bar && !!entity.components.money	
-	}
+  test (entity) {
+    return !!entity.components.bar && !!entity.components.money	
+  }
 
-	enter (entity) {
-		const backgroundGraphic = new Graphics() //new this.renderer.Graphics()
+  enter (entity) {
+    const backgroundGraphic = new Graphics() //new this.renderer.Graphics()
 
-		const { maxValue, currentValue } = entity.components.bar
+    const { maxValue, currentValue } = entity.components.bar
 
-		backgroundGraphic.beginFill(this.fuelColor)
-		backgroundGraphic.drawRoundedRect(this.x,this.y,maxValue,this.height,8)
-		backgroundGraphic.beginFill(0xffffff,0.9)
-		backgroundGraphic.drawRect(this.x+currentValue,this.y,maxValue-currentValue-2,this.height)
-		backgroundGraphic.endFill()
-		
-		const foregroundGraphic = new Graphics()
+    backgroundGraphic.beginFill(this.fuelColor)
+    backgroundGraphic.drawRoundedRect(this.x,this.y,maxValue,this.height,8)
+    backgroundGraphic.beginFill(0xffffff,0.9)
+    backgroundGraphic.drawRect(this.x+currentValue,this.y,maxValue-currentValue-2,this.height)
+    backgroundGraphic.endFill()
 
-		foregroundGraphic.lineStyle(4, this.borderColor)
-		foregroundGraphic.drawRoundedRect(this.x,this.y,maxValue,this.height,8)
+    const foregroundGraphic = new Graphics()
 
-		const text = new Graphics()
+    foregroundGraphic.lineStyle(4, this.borderColor)
+    foregroundGraphic.drawRoundedRect(this.x,this.y,maxValue,this.height,8)
 
-		let moneyLabel = new PIXI.Text(`€${entity.components.money.amount}`, new PIXI.TextStyle({ fontFamily: 'Arial' }))
-		moneyLabel.x = 20
-		moneyLabel.y = 40
+    const text = new Graphics()
 
-		entity.updateComponent('bar', {
-			backgroundGraphic: backgroundGraphic,
-			foregroundGraphic: foregroundGraphic
-		})
+    let moneyLabel = new PIXI.Text(`€${entity.components.money.amount}`, new PIXI.TextStyle({ fontFamily: 'Arial' }))
+    moneyLabel.x = 20
+    moneyLabel.y = 40
 
-		entity.updateComponent('money', {
-			moneyLabel
-		})
+    entity.updateComponent('bar', {
+      backgroundGraphic: backgroundGraphic,
+      foregroundGraphic: foregroundGraphic
+    })
 
-		this.stage = new Container()
-		this.stage.addChild(backgroundGraphic)
-		this.stage.addChild(foregroundGraphic)
-		this.stage.addChild(moneyLabel)
+    entity.updateComponent('money', {
+      moneyLabel
+    })
 
-		this.viewPort.add(this.stage)
-	}
+    this.stage = new Container()
+    this.stage.addChild(backgroundGraphic)
+    this.stage.addChild(foregroundGraphic)
+    this.stage.addChild(moneyLabel)
+    this.stage.scale.x = 1/this.viewPort.zoom
+    this.stage.scale.y = 1/this.viewPort.zoom
 
-	postUpdate () {
-		this.renderer.render(this.stage)
-	}
+    this.viewPort.add(this.stage)
+  }
 
-	update (entity) {
-		const { backgroundGraphic, foregroundGraphic } = entity.components.bar
+  postUpdate () {
+    this.renderer.render(this.stage)
+  }
 
-		backgroundGraphic.clear()
+  update (entity) {
+    const { backgroundGraphic, foregroundGraphic } = entity.components.bar
 
-		const { maxValue, currentValue } = entity.components.bar
+    backgroundGraphic.clear()
 
-		backgroundGraphic.beginFill(this.fuelColor)
-		backgroundGraphic.drawRoundedRect(this.x + this.viewPort.position.x,this.y + this.viewPort.position.y,maxValue,this.height,8)
-		backgroundGraphic.beginFill(0xffffff,0.9)
-		backgroundGraphic.drawRect(this.x+currentValue + this.viewPort.position.x,this.y + this.viewPort.position.y,maxValue-currentValue-2,this.height)
-		backgroundGraphic.endFill()
+    const { maxValue, currentValue } = entity.components.bar
 
-		foregroundGraphic.clear()
+    backgroundGraphic.beginFill(this.fuelColor)
+    backgroundGraphic.drawRoundedRect(this.x + this.viewPort.position.x,this.y + this.viewPort.position.y,maxValue,this.height,8)
+    backgroundGraphic.beginFill(0xffffff,0.9)
+    backgroundGraphic.drawRect(this.x+currentValue + this.viewPort.position.x,this.y + this.viewPort.position.y,maxValue-currentValue-2,this.height)
+    backgroundGraphic.endFill()
 
-		foregroundGraphic.lineStyle(4, this.borderColor)
-		foregroundGraphic.drawRoundedRect(this.x + this.viewPort.position.x,this.y + this.viewPort.position.y,maxValue,this.height,8)
-		
-		let { moneyLabel } = entity.components.money
-		
-		moneyLabel.x = 20 + this.viewPort.position.x
-		moneyLabel.y = 40 + this.viewPort.position.y
+    foregroundGraphic.clear()
 
-		moneyLabel.text = `€${entity.components.money.amount}`
+    foregroundGraphic.lineStyle(4, this.borderColor)
+    foregroundGraphic.drawRoundedRect(this.x + this.viewPort.position.x,this.y + this.viewPort.position.y,maxValue,this.height,8)
 
-	}
+    let { moneyLabel } = entity.components.money
+
+    moneyLabel.x = 20 + this.viewPort.position.x
+    moneyLabel.y = 40 + this.viewPort.position.y
+
+    moneyLabel.text = `€${entity.components.money.amount}`
+
+  }
 }

@@ -73,10 +73,16 @@ export default class Map {
     const size = this.tileSize
     const container = new Container()
 
+    const tilemap = {
+      0: 24 * 1 + 1,
+      1: 24 * 2 + 6,
+      2: 24 * 2 + 6,
+    }
+
     for (let i = 0; i < this.tiles.length; i++) {
-      const s = new Sprite(tileSet.tiles[this.tiles[i]])
+      const s = new Sprite(tileSet.tiles[tilemap[this.tiles[i]] || this.tiles[i]])
       const x = i % this.width
-      const y = Math.floor(i / this.width)
+      const y = Math.floor(i/this.width)
 
       s.x = x * this.tileSize
       s.y = y * this.tileSize

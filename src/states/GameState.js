@@ -23,6 +23,7 @@ export default class GameState extends State {
   enter () {
     const map = new Map(require('assets/maps.json').maps[1], new TileSet('tilesets/dungeon.png'))
     this.viewPort.view(map.width * map.tileSize, map.height * map.tileSize)
+    this.viewPort.zoomTo(4)
 
     this.ecs = new ECS()
     this.systems = this.initSystems(this.ecs)
