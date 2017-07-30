@@ -26,7 +26,7 @@ export default class Sprite {
     const namespaceRe = new RegExp(`^${namespace}`)
 
     return Object
-      .keys(this[this.name].textures)
+      .keys(this.resource.textures)
       .filter(key => namespaceRe.test(key))
       .length
   }

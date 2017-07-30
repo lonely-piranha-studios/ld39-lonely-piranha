@@ -24,7 +24,7 @@ export default class GameState extends State {
   enter () {
     const map = this.mapGenerator.createMap({
       debug: true,
-      tileset: new TileSet('tilesets/dungeon.png', this.sprite.resource)
+      tileset: new TileSet('tilesets/dungeon.png', this.sprite.resource.textures)
     });
     this.viewPort.view(map.width * map.tileSize, map.height * map.tileSize)
     this.viewPort.zoomTo(4)
