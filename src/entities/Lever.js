@@ -19,6 +19,7 @@ export default class Lever {
       sprite: {
         namespace: `tiles/${options.type}`,
         animationState: options.data.state,
+        animationSpeed: options.data.animationSpeed,
       },
     })
     return o
