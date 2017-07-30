@@ -23,17 +23,17 @@ export default class GameState extends State {
   }
 
   enter () {
+    this.ecs = new ECS()
+    this.systems = this.initSystems(this.ecs)
+
     const map = this.mapGenerator.createMap({
+      ecs: this.ecs,
       debug: true,
       tileset: new TileSet('tilesets/dungeon.png', this.sprite.resource.textures),
       rooms: Object.values(mapList.maps)
     });
     this.viewPort.view(map.width * map.tileSize, map.height * map.tileSize)
     this.viewPort.zoomTo(4)
-
-    this.ecs = new ECS()
-    this.systems = this.initSystems(this.ecs)
-
     this.systems.map.setMap(map)
     this.map = map
 

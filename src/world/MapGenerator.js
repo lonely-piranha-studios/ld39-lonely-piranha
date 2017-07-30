@@ -21,6 +21,7 @@ export default class MapGenerator {
   }
 
   createMap(config) {
+    this.ecs = config.ecs
     this.mapRadius = config.mapRadius || this.mapRadius;
     this.mapCollide = [];
     this.mapTiles = [];
@@ -61,9 +62,15 @@ export default class MapGenerator {
       width: mapWidth,
       height: mapHeight,
       collision,
-      objects: {},
+      objects: [
+        {
+          x: (16*300) + 2,
+          y: (16*300) + 2,
+          type: 'rock'
+        }
+      ],
       tiles
-    }, this.tileset);
+    }, this.tileset, this.ecs);
 
     return map;
   }

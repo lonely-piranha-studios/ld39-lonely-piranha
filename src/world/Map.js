@@ -14,25 +14,46 @@ import Component from 'components'
 
 export default class Map {
 
-  constructor (data, tileSet) {
+  constructor (data, tileSet, ecs) {
     console.log(tileSet)
     if (data) {
-      this.init(data, tileSet)
+      this.init(data, tileSet, ecs)
     }
   }
 
-  init (data, tileSet) {
+  init (data, tileSet, ecs) {
     this.width = data.width
     this.height = data.height
     this.tileSize = tileSet.tileSize
     this.tiles = data.tiles
     this.objects = data.objects
-
     this.collision = data.collision
     this.collider = collideAabbTilemap((x, y) => this.collision[x + y*this.width], this.tileSize, [this.width, this.height])
 
     const test = new MapChunkLoader(data)
     this.texture = test.texture
+
+    for (let i = 0; i < this.objects.length; i++) {
+      const d = this.objects[i]
+      const x = i % this.width * this.tileSize
+      const y = Math.floor(i/this.width) * this.tileSize
+
+
+      const o = new Entity(null, [
+        Component.Position,
+        Component.Shape,
+        Component.Sprite,
+      ])
+
+      o.updateComponents({
+        pos: { x: x, y: y },
+        shape: { width: this.tileSize, height: this.tileSize },
+        sprite: { namespace: `tiles/${d.type}` },
+      })
+      o.components.sprite.graphic = new Sprite(Texture.fromFrame(o.components.sprite.namespace + '.png'))
+
+      ecs.addEntity(o)
+    }
     return
     const size = this.tileSize
     const g = new Graphics()
@@ -58,27 +79,6 @@ export default class Map {
       // container.addChild(s)
     }
 
-    for (let i = 0; i < this.objects.length; i++) {
-      const d = this.objects[i]
-      const x = i % this.width * this.tileSize
-      const y = Math.floor(i/this.width) * this.tileSize
-
-
-      const o = new Entity(null, [
-        Component.Position,
-        Component.Shape,
-        Component.Sprite,
-      ])
-
-      o.updateComponents({
-        pos: { x: x, y: y },
-        shape: { width: this.tileSize, height: this.tileSize },
-        sprite: { namespace: `tiles/${d.type}` },
-      })
-      o.components.sprite.graphic = new Sprite(Texture.fromFrame(o.components.sprite.namespace + '.png'))
-
-      g.addChild(o.components.sprite.graphic)
-    }
     this.texture = g
   }
 

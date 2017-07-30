@@ -25,21 +25,23 @@ export default class RenderingSystem extends System {
       animationState,
     } = sprite
 
-    const textures = this.sprite.getFrameSet(`${namespace}/${animationState}`)
-    const g = new AnimatedSprite(textures)
-    g.x = pos.x
-    g.y = pos.y
-    g.scale.x = scale.x
-    g.scale.y = scale.y
-    g.anchor.set(anchor.x, anchor.y);
-    g.animationSpeed = animationSpeed;
-    g.play()
+    if (!sprite.graphic) {
+      const textures = this.sprite.getFrameSet(`${namespace}/${animationState}`)
+      const g = new AnimatedSprite(textures)
+      g.x = pos.x
+      g.y = pos.y
+      g.scale.x = scale.x
+      g.scale.y = scale.y
+      g.anchor.set(anchor.x, anchor.y);
+      g.animationSpeed = animationSpeed;
+      g.play()
 
-    entity.updateComponent('sprite', {
-      graphic: g
-    })
+      entity.updateComponent('sprite', {
+        graphic: g
+      })
+    }
 
-    this.viewPort.add(g)
+    this.viewPort.add(sprite.graphic)
   }
 
   exit (entity) {
