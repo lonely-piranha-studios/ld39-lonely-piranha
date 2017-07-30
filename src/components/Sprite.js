@@ -4,9 +4,10 @@ const Sprite = {
   getDefaults: () => ({
     namespace: null,
     anchor: { x: 0, y: 0 },
-    speed: 0,
-    animationState: 'east-rest',
-    previousAnimationState: 'east-rest',
+    scale: { x: 1, y: 1 },
+    animationSpeed: 0,
+    animationState: null,
+    previousAnimationState: null,
   })
 }
 

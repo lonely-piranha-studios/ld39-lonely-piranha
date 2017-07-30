@@ -22,9 +22,12 @@ export default class GameState extends State {
   }
 
   enter () {
-    const map = this.mapGenerator.createMap({ debug: true, tileset: new TileSet('tilesets/dungeon.png') });
+    const map = this.mapGenerator.createMap({
+      debug: true,
+      tileset: new TileSet('tilesets/dungeon.png', this.sprite.resource.textures)
+    });
     this.viewPort.view(map.width * map.tileSize, map.height * map.tileSize)
-    this.viewPort.zoomTo(2)
+    this.viewPort.zoomTo(4)
 
     this.ecs = new ECS()
     this.systems = this.initSystems(this.ecs)
@@ -52,7 +55,10 @@ export default class GameState extends State {
       sprite: {
         namespace: 'character',
         anchor: { x: 0, y: 0.5 },
-        animationSpeed: 0.1,
+        scale: { x: 0.25, y: 0.25 },
+        animationSpeed: 0.5,
+        animationState: 'east-rest',
+        previousAnimationState: 'east-rest',
       }
     })
     entity.components.keyboard = new Keyboard({

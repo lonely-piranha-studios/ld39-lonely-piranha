@@ -1,16 +1,21 @@
-import { loader, Texture, utils } from 'pixi'
+import { loader, Texture } from 'pixi'
 
 
 export default class Sprite {
 
-  constructor (path) {
+  constructor (name, path) {
+    this.name = name
     this.path = path
   }
 
   load () {
     loader
-      .add(this.path)
-      .load(() => this.onLoad())
+      .add(this.name, this.path)
+      .load((...args) => {
+        const [loader, resources] = args
+        this.resource = resources[this.name]
+        this.onLoad(...args)
+      })
   }
 
   onLoad () {
@@ -21,7 +26,7 @@ export default class Sprite {
     const namespaceRe = new RegExp(`^${namespace}`)
 
     return Object
-      .keys(utils.TextureCache)
+      .keys(this.resource.textures)
       .filter(key => namespaceRe.test(key))
       .length
   }
