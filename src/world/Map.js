@@ -48,7 +48,7 @@ const bitmask = {
   '251': 44,
   '254': 45,
   '255': 46,
-  '0': 47
+  '0': 47,
 }
 
 
@@ -73,10 +73,18 @@ export default class Map {
     const size = this.tileSize
     const container = new Container()
 
+<<<<<<< HEAD
     const tilemap = {
       0: 24 * 1 + 1,
       1: 24 * 2 + 6,
       2: 24 * 2 + 6,
+=======
+    const tileSet = {
+      0: 0xff0000,
+      1: 0xffcccc,
+      2: 0x0000ff,
+      // 3: 0x00ff00,
+>>>>>>> Don't know
     }
 
     for (let i = 0; i < this.tiles.length; i++) {
@@ -90,7 +98,7 @@ export default class Map {
       container.addChild(s)
     }
 
-      /*
+    /*
     const tilesTest = this.tiles.map((t, i) => {
       const x = i % this.width
       const y = Math.floor(i / this.width)
@@ -124,7 +132,7 @@ export default class Map {
     const tx = x
     const ty = y
     let count = 0
-    let inc = 1
+    let i = 0
 
     for (let y = -1; y <= 1; y++) {
       for (let x = -1; x <= 1; x++) {
@@ -133,11 +141,10 @@ export default class Map {
 
           if (tx + x >= 0 && tx + x <= this.width - 1
           && ty + y >= 0 && ty + y <= this.height - 1
-          // if (neighbor >= 0 && neighbor <= this.tiles.length - 1
           && this.tiles[neighbor] === tile) {
-            count += inc
+            count |= 1 << i
           }
-          inc += inc
+          i++
         }
       }
     }
