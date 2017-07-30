@@ -25,6 +25,7 @@ export default class MapGenerator {
     this.mapRadius = config.mapRadius || this.mapRadius;
     this.mapCollide = [];
     this.mapTiles = [];
+    this.mapObjects = [];
     this.rooms = config.rooms || this.rooms;
     this.spawn = config.spawn || this.spawn;
     this.tileset = config.tileset || this.tileset;
@@ -62,15 +63,11 @@ export default class MapGenerator {
       width: mapWidth,
       height: mapHeight,
       collision,
-      objects: [
-        {
-          x: 302,
-          y: 302,
-          type: 'rock',
-        }
-      ],
+      objects: this.mapObjects,
       tiles
     }, this.tileset, this.ecs);
+
+    console.log(this.mapObjects);
 
     return map;
   }
@@ -247,5 +244,13 @@ export default class MapGenerator {
       entries.push({ type: 'right', x: this.mapRadius + x - mapXOrigo + map.width - 1, y: this.mapRadius + y });
     }
     this.availableEntries.push(...entries);
+    this.mapObjects = [
+      ...this.mapObjects,
+      ...(map.objects || []).map(o => {
+        o.x = this.mapRadius+x-mapXOrigo+o.x
+        o.y = this.mapRadius+y-mapYOrigo+o.y
+        return o
+      })
+    ]
   }
 }
