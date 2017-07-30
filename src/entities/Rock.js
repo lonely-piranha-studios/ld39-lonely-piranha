@@ -15,7 +15,7 @@ export default class Rock {
 
     o.updateComponents({
       pos: { x: options.x, y: options.y },
-      shape: { width: this.tileSize, height: this.tileSize },
+      shape: { width: options.w, height: options.h },
       sprite: { namespace: `tiles/${options.type}` },
     })
     o.components.sprite.graphic = new Sprite(Texture.fromFrame(o.components.sprite.namespace + '.png'))

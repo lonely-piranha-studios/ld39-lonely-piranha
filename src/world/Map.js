@@ -30,6 +30,8 @@ export default class Map {
       const objectData = Object.assign({
         x: this.objects[i].x * this.tileSize,
         y: this.objects[i].y * this.tileSize,
+        w: this.tileSize,
+        h: this.tileSize,
       }, this.objects[i])
       const object = Rock.create(objectData)
       ecs.addEntity(object)
