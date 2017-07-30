@@ -77,7 +77,7 @@ export default class Map {
       })
       o.components.sprite.graphic = new Sprite(Texture.fromFrame(o.components.sprite.namespace + '.png'))
 
-      container.addChild(o.components.sprite.graphic)
+      g.addChild(o.components.sprite.graphic)
     }
     this.texture = g
   }
