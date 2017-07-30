@@ -55,18 +55,19 @@ export default class GameState extends State {
         width: 8, height: 8,
       },
       sprite: {
-        namespace: 'character',
-        anchor: { x: 0.35, y: 0.6 },
+        namespace: 'protocoldroid2',
+        anchor: { x: 0, y: 0.5 },
+        scale: { x: 0.25, y: 0.25 },
         animationSpeed: 0.3,
         animationState: 'east-rest',
         previousAnimationState: 'east-rest',
       }
     })
     entity.components.keyboard = new Keyboard({
-      up:    ['up'],
-      down:  ['down'],
-      left:  ['left'],
-      right: ['right']
+      up:    ['up', 'w'],
+      left:  ['left', 'a'],
+      down:  ['down', 's'],
+      right: ['right', 'd'],
     })
 
     this.ecs.addEntity(entity)
