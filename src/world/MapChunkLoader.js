@@ -154,7 +154,7 @@ export default class MapChunkLoader {
             x * tileSize, y * tileSize, tileSize, tileSize
           )
         } 
-        if (!tile || tile === notFoundTile || true){
+        if (!tile || tile === notFoundTile){
           ctx.fillText(tileBitmask, x * tileSize, y * tileSize + 10)
         }
       }
