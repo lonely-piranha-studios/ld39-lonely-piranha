@@ -18,13 +18,13 @@ export default class FloorSpike {
       pos: { x: options.x, y: options.y },
       shape: { width: options.w, height: options.h },
       sprite: {
-        namespace: `tiles/lever`, // ${options.type}
+        namespace: `tiles/${options.type}`,
         animationState: options.data.state,
         animationSpeed: options.data.animationSpeed,
       },
       interaction: {
-        x: [-1, -1],
-        y: [-1, -1],
+        x: [0, 0],
+        y: [0, 0],
       }
     })
     return o

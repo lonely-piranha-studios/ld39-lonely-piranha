@@ -38,7 +38,7 @@ export default class Map {
       y: 302,
       data: {
         state: 'on-turning',
-        animationSpeed: 0.3
+        animationSpeed: 0.1
       }
     })
     this.objects.push({
