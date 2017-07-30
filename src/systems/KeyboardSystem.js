@@ -25,7 +25,7 @@ export default class KeyboardSystem extends System {
   update (entity) {
     const { physic, keyboard, sprite } = entity.components
     const input = keyboard.getState()
-    const speed = 3
+    const speed = 2
 
     const dx = input.down('right') - input.down('left')
     const dy = input.down('down') - input.down('up')
@@ -36,7 +36,7 @@ export default class KeyboardSystem extends System {
     sprite.animationState = physic.vel.x === 0 ? sprite.previousAnimationState.split('-')[0] : (physic.vel.x < 0 ? 'west' : 'east')
     sprite.animationState += '-' + ((physic.vel.x === 0 && physic.vel.y === 0) ? 'rest' : 'run')
 
-    sprite.animationState = physic.vel.y === 0 ? sprite.animationState.split('-')[0] : (physic.vel.y < 0 ? 'north' : 'south')
+    sprite.animationState = physic.vel.y === 0 ? sprite.animationState.split('-')[0] : (physic.vel.y < 0 ? 'north' : 'west')
     sprite.animationState += '-' + ((physic.vel.x === 0 && physic.vel.y === 0) ? 'rest' : 'run')
 
     physic.vel.x = speed * d.x
