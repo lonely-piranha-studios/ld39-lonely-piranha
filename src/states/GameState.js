@@ -2,7 +2,7 @@ import ECS from 'ecs'
 import { autoDetectRenderer } from 'pixi'
 
 import { Keyboard } from 'core/input'
-import { ViewPort } from 'core/gfx'
+import { ViewPort, TileSet } from 'core/gfx'
 import { State } from 'core/state'
 
 import System from 'systems'
@@ -21,7 +21,7 @@ export default class GameState extends State {
   }
 
   enter () {
-    const map = new Map(require('assets/maps.json').maps[1])
+    const map = new Map(require('assets/maps.json').maps[1], new TileSet('tilesets/dungeon.png'))
     this.viewPort.view(map.width * map.tileSize, map.height * map.tileSize)
 
     this.ecs = new ECS()

@@ -1,5 +1,5 @@
 import collideAabbTilemap from 'collide-2d-aabb-tilemap'
-import { Graphics } from 'pixi'
+import { Graphics, RenderTexture, Container, Sprite, autoDetectRenderer } from 'pixi'
 
 const bitmask = {
   '2': 1,
@@ -54,46 +54,45 @@ const bitmask = {
 
 export default class Map {
 
-  constructor (data) {
+  constructor (data, tileSet) {
+    console.log(tileSet)
+    if (data) {
+      this.init(data, tileSet)
+    }
+  }
+
+  init (data, tileSet) {
     this.width = data.width
     this.height = data.height
-    this.tileSize = 32 * 2
+    this.tileSize = tileSet.tileSize
     this.tiles = data.tiles
 
     this.collision = data.collision
     this.collider = collideAabbTilemap((x, y) => this.collision[x + y*this.width], this.tileSize, [this.width, this.height])
 
-    this.init()
-  }
-
-  init () {
-    const g = this.texture = new Graphics()
     const size = this.tileSize
-
-    const tileSet = {
-      0: 0xff0000,
-      1: 0xffcccc,
-      2: 0x0000ff,
-    }
+    const container = new Container()
 
     for (let i = 0; i < this.tiles.length; i++) {
-      const t = this.tiles[i]
+      const s = new Sprite(tileSet.tiles[this.tiles[i]])
       const x = i % this.width
       const y = Math.floor(i / this.width)
 
-      const color = tileSet[t]
-      if (color) {
-        g.beginFill(color)
-        g.drawRect(x * size, y * size, size, size)
-      }
+      s.x = x * this.tileSize
+      s.y = y * this.tileSize
+
+      container.addChild(s)
     }
 
+      /*
     const tilesTest = this.tiles.map((t, i) => {
       const x = i % this.width
       const y = Math.floor(i / this.width)
       const n = this.getNeighbors(x, y, t)
       return (t * 47) + bitmask[n]
     });
+    */
+    this.texture = container
   }
 
   dispose () {
@@ -102,7 +101,7 @@ export default class Map {
   }
 
   collide (aabb, vel) {
-    return this.collider(aabb, [vel.x, vel.y], (moveAxis, moveDir, tileId, tileCoords) => {
+    return this.collider && this.collider(aabb, [vel.x, vel.y], (moveAxis, moveDir, tileId, tileCoords) => {
       return tileId > 0
     })
   }

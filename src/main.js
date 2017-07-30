@@ -10,7 +10,7 @@ class Game {
     this.renderer = autoDetectRenderer({
       width: 800,
       height: 600,
-      transparent: true
+      transparent: true,
     })
 
     this.states = new StateMachine()
