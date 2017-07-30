@@ -30,6 +30,7 @@ const bitmask = {
   '106': 27,
   '107': 28,
   '111': 28,
+  '235': 28,
   '120': 29,
   '122': 30,
   '123': 31,
@@ -44,7 +45,7 @@ const bitmask = {
   '219': 39,
   '222': 40,
   '223': 41,
-  '235': 28,
+  '244': 34,
   '248': 42,
   '246': 36,
   '249': 42,
@@ -61,26 +62,66 @@ const bitmask = {
   232: 26,
   105: 26,
   240: 34,
+  140: 48,
+  128: 48,
+  130: 48,
+  101: 48,
+  106: 48,
+  98: 48,
+  122: 48,
+  120: 48,
+  136: 48,
+  139: 48,
+  15: 4,
+  43: 4,
+  23: 7,
 }
 
 const t = 24
+const waterTile = 21 + t * 9;
 const tilesetMap = {
-  46: 1 + t,
-  12: 6 + t,
-  28: 5 + t * 2,
-  10: 6 + t,
-  36: 7 + t * 2,
-  42: 6 + t * 3,
-  4: 9 + t * 3,
-  7: 8 + t * 3,
-  26: 9,
-  34: 8,
-  14: 1 + t,
-  13: 1 + t,
-  44: 5 + t * 3,
-  45: 7 + t * 3,
-  33: 5 + t,
-  41: 7 + t,
+  0: {
+    46: 1 + t,
+    12: 6 + t,
+    28: 5 + t * 2,
+    10: 6 + t,
+    36: 7 + t * 2,
+    42: 6 + t * 3,
+    4: 9 + t * 3,
+    7: 8 + t * 3,
+    26: 9,
+    34: 8,
+    14: 1 + t,
+    13: 1 + t,
+    44: 5 + t * 3,
+    45: 7 + t * 3,
+    33: 5 + t,
+    41: 7 + t,
+    48: 1 + t,
+  },
+  2: {
+    46: waterTile,
+    12: waterTile,
+    28: waterTile,
+    10: waterTile,
+    36: waterTile,
+    42: waterTile,
+    4: waterTile,
+    2: waterTile,
+    11: waterTile,
+    17: waterTile,
+    7: waterTile,
+    8: waterTile,
+    26: waterTile,
+    34: waterTile,
+    14: waterTile,
+    13: waterTile,
+    44: waterTile,
+    45: waterTile,
+    33: waterTile,
+    41: waterTile,
+    48: waterTile,
+  }
 }
 
 export default class MapChunkLoader {
@@ -114,14 +155,14 @@ export default class MapChunkLoader {
     const x_tiles = this.img.width / tileSize
     const y_tiles = this.img.height / tileSize
 
-    this.tiles = this.tiles.map((t, i) => {
+    const autoTiles = this.tiles.map((t, i) => {
       const x = i % this.width
       const y = Math.floor(i / this.width)
       const n = this.getNeighbors(x, y, t)
 
       if (t === 1) return 'continue'
 
-      const out = (t * 47) + bitmask[n] || t
+      const out = bitmask[n] || t
 
       if (!out) {
         return n
@@ -132,7 +173,8 @@ export default class MapChunkLoader {
 
     for (let i = 0; i < this.tiles.length; i++) {
       const l = this.tiles[i]
-      const t = tilesetMap[l] || l
+      const m = autoTiles[i]
+      const t = (tilesetMap[l] && tilesetMap[l][m]) || m
       if (t === 'continue') continue
 
       const tx = t % x_tiles
@@ -145,8 +187,8 @@ export default class MapChunkLoader {
         tileSize * tx, tileSize * ty, tileSize, tileSize,
         x * tileSize, y * tileSize, tileSize, tileSize
       )
-      if (l > 47) {
-        ctx.fillText(l, x * tileSize, y * tileSize + 10)
+      if (false) {
+        ctx.fillText(m, x * tileSize, y * tileSize + 10)
       }
     }
 
