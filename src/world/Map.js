@@ -35,7 +35,10 @@ export default class Map {
       type: 'floor_spike',
       x: 302,
       y: 302,
-      data: { state: 'on-idle' }
+      data: {
+        state: 'on-turning',
+        animationSpeed: 0.3
+      }
     })
     for (let i = 0; i < this.objects.length; i++) {
       const entity = {
