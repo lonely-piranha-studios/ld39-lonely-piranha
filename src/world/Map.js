@@ -27,12 +27,12 @@ export default class Map {
     this.texture = test.texture
 
     for (let i = 0; i < this.objects.length; i++) {
-      const objectData = Object.assign({
+      const objectData = Object.assign({}, this.objects[i], {
         x: this.objects[i].x * this.tileSize,
         y: this.objects[i].y * this.tileSize,
         w: this.tileSize,
         h: this.tileSize,
-      }, this.objects[i])
+      })
       const object = Rock.create(objectData)
       ecs.addEntity(object)
     }
