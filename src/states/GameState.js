@@ -52,12 +52,12 @@ export default class GameState extends State {
         x: 16 * 300, y: 16 * 300,
       },
       shape: {
-        width: 8, height: 8,
+        width: 4, height: 4,
       },
       sprite: {
-        namespace: 'protocoldroid2',
-        anchor: { x: 0, y: 0.5 },
-        scale: { x: 0.25, y: 0.25 },
+        namespace: 'character',
+        anchor: { x: 0.375, y: 0.5 },
+        scale: { x: 0.5, y: 0.5 },
         animationSpeed: 0.3,
         animationState: 'east-rest',
         previousAnimationState: 'east-rest',
