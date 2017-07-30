@@ -3,6 +3,7 @@ import MapChunkLoader from './MapChunkLoader'
 
 import {
   Chest,
+  Fire,
   FloorSpike,
   Lever,
   Rock,
@@ -40,9 +41,19 @@ export default class Map {
         animationSpeed: 0.3
       }
     })
+    this.objects.push({
+      type: 'fire',
+      x: 303,
+      y: 302,
+      data: {
+        state: 'burning',
+        animationSpeed: 0.1
+      }
+    })
     for (let i = 0; i < this.objects.length; i++) {
       const entity = {
         'floor_spike': FloorSpike,
+        'fire': Fire,
         'lever': Lever,
         'chest': Chest,
         'rock': Rock,
