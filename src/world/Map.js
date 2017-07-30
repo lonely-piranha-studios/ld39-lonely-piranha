@@ -1,16 +1,9 @@
 import collideAabbTilemap from 'collide-2d-aabb-tilemap'
-import { Entity } from 'ecs'
 import MapChunkLoader from './MapChunkLoader'
-import {
-  Graphics,
-  RenderTexture,
-  Texture,
-  Container,
-  Sprite,
-  autoDetectRenderer,
-} from 'pixi'
 
+import { Rock } from '../entities'
 import Component from 'components'
+
 
 export default class Map {
 
@@ -34,54 +27,13 @@ export default class Map {
     this.texture = test.texture
 
     for (let i = 0; i < this.objects.length; i++) {
-      const d = this.objects[i]
-      const x = d.x * this.tileSize
-      const y = d.y * this.tileSize
-
-      const o = new Entity(null, [
-        Component.Position,
-        Component.Shape,
-        Component.Sprite,
-      ])
-
-      o.updateComponents({
-        pos: { x: x, y: y },
-        shape: { width: this.tileSize, height: this.tileSize },
-        sprite: { namespace: `tiles/${d.type}` },
-      })
-      o.components.sprite.graphic = new Sprite(Texture.fromFrame(o.components.sprite.namespace + '.png'))
-
-      ecs.addEntity(o)
+      const objectData = Object.assign({
+        x: this.objects[i].x * this.tileSize,
+        y: this.objects[i].y * this.tileSize,
+      }, this.objects[i])
+      const object = Rock.create(objectData)
+      ecs.addEntity(object)
     }
-
-    return
-
-
-    const size = this.tileSize
-    const g = new Graphics()
-
-    const tilemap = {
-      0: 0x2f293a,
-      1: 0x92b09b,
-      2: 0x83f3f2,
-    }
-
-    for (let i = 0; i < this.tiles.length; i++) {
-      // const s = new Sprite(tileSet.tiles[tilemap[this.tiles[i]] || this.tiles[i]])
-      // s.y = y * this.tileSize
-      const t = this.tiles[i]
-      const x = i % this.width
-      const y = Math.floor(i/this.width)
-
-      // s.x = x * this.tileSize
-      // s.y = y * this.tileSize
-      g.beginFill(tilemap[t]);
-      g.drawRect(x * this.tileSize, y * this.tileSize, this.tileSize, this.tileSize)
-      g.endFill();
-      // container.addChild(s)
-    }
-
-    this.texture = g
   }
 
   dispose () {
