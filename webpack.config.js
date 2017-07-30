@@ -13,9 +13,9 @@ module.exports = {
     game: './main.js',
   },
   output: {
-    path: path.join(__dirname, 'dist', 'js'),
+    path: path.join(__dirname, 'dist'),
     publicPath: '/',
-    filename: '[name].[hash:8].js',
+    filename: 'js/[name].[hash:8].js',
   },
 
   module: {
@@ -36,7 +36,8 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HTMLWebpackPlugin({
-      template: path.join(__dirname, 'index.html')
+      template: path.join(__dirname, 'index.html'),
+      filename: path.join(__dirname, 'dist', 'index.html'),
     }),
   ],
 

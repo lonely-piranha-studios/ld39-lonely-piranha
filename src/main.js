@@ -26,7 +26,7 @@ class Game {
     this.states.addState('game', new State.GameState(this))
     this.states.addState('town', new State.TownState(this))
 
-    this.states.setState('town')
+    this.states.setState('loading')
   }
 
   setState (state) {
