@@ -58,7 +58,7 @@ export default class GameState extends State {
     const mouse = this.mouse.getState()
 
     if (mouse.pressed('left')) {
-      this.game.setState('game')
+      this.game.setState('loading')
     }
   }
 }
