@@ -15,6 +15,8 @@ export default class TownState extends State {
 
 		this.renderer = game.renderer
 		this.viewPort = new ViewPort(this.renderer)
+
+		this.states = game.states
 	}
 
 	enter () {
@@ -41,8 +43,18 @@ export default class TownState extends State {
 			}
 		})
 
+		const option3 = new ECS.Entity(null, [Component.TownOption])
+		option3.updateComponents({
+			option: {
+				label: "Explore Dungeon",
+				index: 3,
+				effect: () => {this.states.setState('loading')}
+			}
+		})
+
 		this.ecs.addEntity(option1)
 		this.ecs.addEntity(option2)
+		this.ecs.addEntity(option3)
 
 		
 

@@ -32,7 +32,7 @@ export default class RenderTownSystem extends System {
 
 	enter (entity) {
 		const { option } = entity.components
-		const color = option.index === this.focused ? 0x44dd44 : 0x000000
+		const color = option.index === this.focused ? 0x70ff90 : 0x000000
 		const style = new PIXI.TextStyle({fill: color})
 		let label = new PIXI.Text(
 			option.label,
