@@ -1,7 +1,7 @@
 import collideAabbTilemap from 'collide-2d-aabb-tilemap'
 import MapChunkLoader from './MapChunkLoader'
 
-import { Rock } from '../entities'
+import { Lever, Rock } from '../entities'
 import Component from 'components'
 
 
@@ -26,15 +26,29 @@ export default class Map {
     const test = new MapChunkLoader(data)
     this.texture = test.texture
 
+    this.objects.push({
+      type: 'lever',
+      x: 302,
+      y: 302,
+      data: {state: 'on-idle'}
+    })
     for (let i = 0; i < this.objects.length; i++) {
-      const objectData = Object.assign({}, this.objects[i], {
-        x: this.objects[i].x * this.tileSize,
-        y: this.objects[i].y * this.tileSize,
-        w: this.tileSize,
-        h: this.tileSize,
-      })
-      const object = Rock.create(objectData)
-      ecs.addEntity(object)
+      const entity = {
+        'rock': Rock,
+        'lever': Lever,
+      }[this.objects[i].type]
+
+      if (entity) {
+        const objectData = Object.assign({}, this.objects[i], {
+          x: this.objects[i].x * this.tileSize,
+          y: this.objects[i].y * this.tileSize,
+          w: this.tileSize,
+          h: this.tileSize,
+        })
+
+        const object = entity.create(objectData)
+        ecs.addEntity(object)
+      }
     }
   }
 
