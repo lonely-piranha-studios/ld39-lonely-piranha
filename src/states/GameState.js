@@ -24,7 +24,7 @@ export default class GameState extends State {
 
   enter () {
     const map = this.mapGenerator.createMap({
-      debug: !true,
+      debug: true,
       tileset: new TileSet('tilesets/dungeon.png', this.sprite.resource.textures),
       rooms: Object.values(mapList.maps)
     });

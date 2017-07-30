@@ -100,7 +100,7 @@ export default class MapGenerator {
     for (let ind = 0; ind < tot; ind++) {
       const xPos = this.mapRadius + x - 3 - mapXOrigo + (ind - Math.floor(ind/mapWidth) * mapWidth);
       const yPos = this.mapRadius + y - 3 - mapYOrigo + Math.floor(ind/mapWidth);
-      if (this.mapCollide[xPos] && this.mapCollide[xPos][yPos]) {
+      if (this.mapCollide[xPos] && this.mapCollide[xPos][yPos] === 0) {
         return true;
       }
     }
