@@ -3,7 +3,7 @@ const Bar = {
 
 	getDefaults: () => ({
 		maxValue: 100,
-		currentValue: 40
+		currentValue: 50
 	})
 }
 

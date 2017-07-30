@@ -35,6 +35,7 @@ export default class GameState extends State {
 
 		document.body.onclick = () => {
 			game.states.setState('game')
+			document.body.onclick = null
 		}
 	}
 

@@ -2,7 +2,7 @@ const Money = {
 	name: 'money',
 
 	getDefaults: () => ({
-		amount: 0
+		amount: 100
 	})
 }
 
