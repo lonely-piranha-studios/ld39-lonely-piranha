@@ -1,39 +1,8 @@
 import { utils, Container, Texture, Sprite } from 'pixi'
 
-/* const tilesetMap = {
-  0: {
-    46: 1 + t,
-    12: 6 + t,
-    28: 5 + t * 2,
-    10: 6 + t,
-    36: 7 + t * 2,
-    42: 6 + t * 3,
-    4: 9 + t * 3,
-    7: 8 + t * 3,
-    26: 9,
-    34: 8,
-    14: 11 + t,
-    13: 11,
-    44: 5 + t * 3,
-    45: 7 + t * 3,
-    33: 5 + t,
-    41: 7 + t,
-    48: 11 + t,
-    49: 1 + t,
-    1: 11 + t * 2,
-    3: 11 + t * 2,
-    192: 11,
-    13: 11,
-    24: 11 + t * 3,
-    8: 10 + t * 2,
-    56: 10 + t * 3,
-    144: 10 + t * 4,
-  }
-}
-*/
 const spriteSheetWidth = 24
 
-const waterTile = [21, 10]
+const waterTile = [21, 9]
 const voidTile = [1, 1]
 const block = [10, 4]
 
@@ -87,14 +56,17 @@ const bitMaskMap = {
     233: edgeTopRight,
     125: edgeTopRight,
     106: edgeTopRight,
+    105: edgeTopRight,
   22: edgeBottomLeft,
     151: edgeBottomLeft,
     23: edgeBottomLeft,
     62: edgeBottomLeft,
+    30: edgeBottomLeft,
   11: edgeBottomRight,
     15: edgeBottomRight,
     47: edgeBottomRight,
     75: edgeBottomRight,
+    43: edgeBottomRight,
 }
 
 export default class MapChunkLoader {
@@ -138,23 +110,35 @@ export default class MapChunkLoader {
     for (let i = 0; i < this.tiles.length; i++) {
       const tileType = this.tiles[i]
       if (tileType === 1) continue // Normal ground, nothing to draw
-      if (tileType === 2) continue // Water, skip for now
-      const tileBitmask = bitMasks[i];
-      const tile = (bitMaskMap[tileBitmask] && bitMaskMap[tileBitmask][1] * spriteSheetWidth + bitMaskMap[tileBitmask][0])
-        || notFoundTile;
-      const x = i % width
-      const y = i / width << 0
-
-      if (tile) {
+      if (tileType === 2) { // Water
+        const tile = waterTile[1] * spriteSheetWidth + waterTile[0]
+        const x = i % width
+        const y = i / width << 0
         const tx = tile % x_tiles
         const ty = tile / x_tiles << 0
         ctx.drawImage(this.img,
           tileSize * tx, tileSize * ty, tileSize, tileSize,
           x * tileSize, y * tileSize, tileSize, tileSize
         )
-      } 
-      if (!tile || tile === notFoundTile){
-        ctx.fillText(tileBitmask, x * tileSize, y * tileSize + 10)
+      }
+      if (tileType === 0) { // Wall
+        const tileBitmask = bitMasks[i];
+        const tile = (bitMaskMap[tileBitmask] && bitMaskMap[tileBitmask][1] * spriteSheetWidth + bitMaskMap[tileBitmask][0])
+          || notFoundTile;
+        const x = i % width
+        const y = i / width << 0
+
+        if (tile) {
+          const tx = tile % x_tiles
+          const ty = tile / x_tiles << 0
+          ctx.drawImage(this.img,
+            tileSize * tx, tileSize * ty, tileSize, tileSize,
+            x * tileSize, y * tileSize, tileSize, tileSize
+          )
+        } 
+        if (!tile || tile === notFoundTile){
+          ctx.fillText(tileBitmask, x * tileSize, y * tileSize + 10)
+        }
       }
     }
 
