@@ -1,10 +1,10 @@
-import { utils, Texture, Rectangle } from 'pixi'
+import { Texture, Rectangle } from 'pixi'
 
 
 export default class TileSet {
 
-  constructor (image, tileSize = 16, tileMargin = 0) {
-    const { width, height } = utils.TextureCache[image].orig
+  constructor (image, textures, tileSize = 16, tileMargin = 0) {
+    const { width, height } = textures[image].orig
 
     this.image = image
     this.width = width
@@ -13,10 +13,10 @@ export default class TileSet {
     this.tileSize = tileSize
     this.tileMargin = tileMargin
 
-    this.tiles = TileSet.initTilset(image, width, height, tileSize, tileMargin)
+    this.tiles = TileSet.initTilset(image, textures, width, height, tileSize, tileMargin)
   }
 
-  static initTilset (image, width, height, tileSize, tileMargin) {
+  static initTilset (image, textures, width, height, tileSize, tileMargin) {
     const x_tiles = (width - tileMargin)/(tileSize + tileMargin)
     const y_tiles = (height - tileMargin)/(tileSize + tileMargin)
 
@@ -25,7 +25,7 @@ export default class TileSet {
       for (let y = 0; y < y_tiles; y++) {
         const tx = x * (tileSize + tileMargin) + tileMargin
         const ty = y * (tileSize + tileMargin) + tileMargin
-        tiles[x + y * x_tiles] = new Texture(utils.TextureCache[image], new Rectangle(tx, ty, tileSize, tileSize))
+        tiles[x + y * x_tiles] = new Texture(textures[image], new Rectangle(tx, ty, tileSize, tileSize))
       }
     }
     return tiles
