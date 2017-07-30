@@ -23,6 +23,7 @@ export default class MapGenerator {
   createMap(config) {
     this.mapRadius = config.mapRadius || this.mapRadius;
     this.mapCollide = [];
+    this.mapTiles = [];
     this.rooms = config.rooms || this.rooms;
     this.spawn = config.spawn || this.spawn;
     this.tileset = config.tileset || this.tileset;
@@ -49,7 +50,10 @@ export default class MapGenerator {
     const tiles = Array(mapWidth * mapHeight).fill(0);
 
     {this.mapCollide.map((v, x) => v.map((type, y) => {
-      collision[mapWidth * y + x] = type === 0 ? 1 : 0
+      collision[mapWidth * y + x] = type
+    }))}
+
+    {this.mapTiles.map((v, x) => v.map((type, y) => {
       tiles[mapWidth * y + x] = type
     }))}
 
@@ -169,10 +173,18 @@ export default class MapGenerator {
         this.mapCollide[drawX] = [];
       }
       this.mapCollide[drawX][drawY]
-        = 1; // normal ground
+        = 0; // No collision
+      const innerArr2 = this.mapTiles[drawX];
+      if (!Array.isArray(innerArr2)) {
+        this.mapTiles[drawX] = [];
+      }
+      this.mapTiles[drawX][drawY]
+        = 1; // Normal ground
     }
-    this.mapCollide[x1][y1] = 1;
-    this.mapCollide[x2][y2] = 1;
+    this.mapCollide[x1][y1] = 0;
+    this.mapCollide[x2][y2] = 0;
+    this.mapTiles[x1][y1] = 1;
+    this.mapTiles[x2][y2] = 1;
   }
 
   mapWrite(map, x, y) {
@@ -186,6 +198,12 @@ export default class MapGenerator {
         this.mapCollide[xPos] = [];
       }
       this.mapCollide[xPos][yPos]
+        = map.collision ? map.collision[ind] : 0; // read from map
+      const innerArr2 = this.mapTiles[xPos];
+      if (!Array.isArray(innerArr2)) {
+        this.mapTiles[xPos] = [];
+      }
+      this.mapTiles[xPos][yPos]
         = map.tiles ? map.tiles[ind] : 1; // read from map
     }
     let entries = [];
