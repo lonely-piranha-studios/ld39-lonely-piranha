@@ -23,8 +23,12 @@ export default class RenderingSystem extends System {
       scale,
       animationSpeed,
       animationState,
+      previousAnimationState,
     } = sprite
 
+    if (!previousAnimationState) {
+      sprite.previousAnimationState = animationState
+    }
     if (!sprite.graphic) {
       const textures = this.sprite.getFrameSet(`${namespace}/${animationState}`)
       const g = new AnimatedSprite(textures)

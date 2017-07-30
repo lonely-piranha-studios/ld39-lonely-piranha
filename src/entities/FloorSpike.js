@@ -20,7 +20,6 @@ export default class FloorSpike {
       sprite: {
         namespace: `tiles/lever`, // ${options.type}
         animationState: options.data.state,
-        previousAnimationState: options.data.state,
         animationSpeed: options.data.animationSpeed,
       },
       interaction: {
