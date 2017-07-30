@@ -29,7 +29,7 @@ export default class MapGenerator {
     this.availableEntries = [];
 
     if (!!config.debug) {
-      for (let i = 0; i < 200; i++) {
+      for (let i = 0; i < 100; i++) {
         this.rooms.push({
           width: Math.floor(Math.random()*20 + 5),
           height: Math.floor(Math.random()*20 + 5),

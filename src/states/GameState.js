@@ -24,12 +24,13 @@ export default class GameState extends State {
   enter () {
     const map = this.mapGenerator.createMap({ debug: true, tileset: new TileSet('tilesets/dungeon.png') });
     this.viewPort.view(map.width * map.tileSize, map.height * map.tileSize)
-    this.viewPort.zoomTo(4)
+    this.viewPort.zoomTo(2)
 
     this.ecs = new ECS()
     this.systems = this.initSystems(this.ecs)
 
     this.systems.map.setMap(map)
+    this.map = map
 
     const entity = new ECS.Entity(null, [
       Component.Camera,
@@ -43,7 +44,7 @@ export default class GameState extends State {
     ])
     entity.updateComponents({
       pos: {
-        x: 16 * 100, y: 16 * 100,
+        x: 16 * 300, y: 16 * 300,
       },
       shape: {
         width: 8, height: 8,

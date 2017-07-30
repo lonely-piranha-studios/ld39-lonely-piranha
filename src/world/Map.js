@@ -1,5 +1,6 @@
 import collideAabbTilemap from 'collide-2d-aabb-tilemap'
 import { Graphics, RenderTexture, Container, Sprite, autoDetectRenderer } from 'pixi'
+import MapChunkLoader from './MapChunkLoader'
 
 const bitmask = {
   '2': 1,
@@ -70,6 +71,9 @@ export default class Map {
     this.collision = data.collision
     this.collider = collideAabbTilemap((x, y) => this.collision[x + y*this.width], this.tileSize, [this.width, this.height])
 
+    const test = new MapChunkLoader(data)
+    this.texture = test.texture
+    return
     const size = this.tileSize
     const g = new Graphics()
 

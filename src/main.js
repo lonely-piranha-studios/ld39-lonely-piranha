@@ -2,14 +2,15 @@ import StateMachine from 'core/state'
 import { autoDetectRenderer } from 'pixi'
 import State from 'states'
 import clamp from 'lodash.clamp'
+import MapChunkLoader from 'world/MapChunkLoader'
 
 
 class Game {
 
   constructor () {
     this.renderer = autoDetectRenderer({
-      width: 800,
-      height: 600,
+      width: window.innerWidth,
+      height: window.innerHeight,
       transparent: true,
     })
 
