@@ -60,6 +60,7 @@ gulp.task('spriteatlas', () => {
       cssName: `spriteatlas.json`,
       algorithm: 'binary-tree',
       cssTemplate: texturePackerTemplate,
+      padding: 2,
     }))
     .pipe(gulp.dest('./dist/assets/'))
 })
