@@ -30,9 +30,13 @@ const bitMaskMap = {
     63: wallTop,
     159: wallTop,
     191: wallTop,
+    95: wallTop,
+    159: wallTop,
   249: wallBottom,
     248: wallBottom,
+    250: wallBottom,
     252: wallBottom,
+    253: wallBottom,
   246: wallRight,
     214: wallRight,
     215: wallRight,
@@ -41,8 +45,8 @@ const bitMaskMap = {
     107: wallLeft,
     235: wallLeft,
     239: wallLeft,
+    123: wallLeft,
   127: cornerTopLeft,
-    216: cornerTopLeft,
   223: cornerTopRight,
   251: cornerBottomLeft,
   254: cornerBottomRight,
@@ -50,6 +54,8 @@ const bitMaskMap = {
   208: edgeTopLeft,
     240: edgeTopLeft,
     244: edgeTopLeft,
+    245: edgeTopLeft,
+    216: edgeTopLeft,
   120: edgeTopRight,
     104: edgeTopRight,
     232: edgeTopRight,
@@ -57,16 +63,20 @@ const bitMaskMap = {
     125: edgeTopRight,
     106: edgeTopRight,
     105: edgeTopRight,
+    238: edgeTopRight,
   22: edgeBottomLeft,
     151: edgeBottomLeft,
     23: edgeBottomLeft,
     62: edgeBottomLeft,
     30: edgeBottomLeft,
+    119: edgeBottomLeft,
+    158: edgeBottomLeft,
   11: edgeBottomRight,
     15: edgeBottomRight,
     47: edgeBottomRight,
     75: edgeBottomRight,
     43: edgeBottomRight,
+    175: edgeBottomRight,
 }
 
 export default class MapChunkLoader {
@@ -136,7 +146,7 @@ export default class MapChunkLoader {
             x * tileSize, y * tileSize, tileSize, tileSize
           )
         } 
-        if (!tile || tile === notFoundTile){
+        if (!tile || tile === notFoundTile || true){
           ctx.fillText(tileBitmask, x * tileSize, y * tileSize + 10)
         }
       }
