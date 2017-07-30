@@ -4,6 +4,7 @@ import RenderingSystem from './RenderingSystem'
 import CameraSystem from './CameraSystem'
 import MapSystem from './MapSystem'
 import GUIRenderSystem from './GUIRenderSystem'
+import RenderTownSystem from './RenderTownSystem'
 
 
 export default {
@@ -13,5 +14,6 @@ export default {
   CameraSystem,
   MapSystem,
   GUIRenderSystem,
+  RenderTownSystem,
 }
 

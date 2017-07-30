@@ -35,9 +35,8 @@ export default class Map {
 
     for (let i = 0; i < this.objects.length; i++) {
       const d = this.objects[i]
-      const x = i % this.width * this.tileSize
-      const y = Math.floor(i/this.width) * this.tileSize
-
+      const x = d.x * this.tileSize
+      const y = d.y * this.tileSize
 
       const o = new Entity(null, [
         Component.Position,
@@ -54,7 +53,10 @@ export default class Map {
 
       ecs.addEntity(o)
     }
+
     return
+
+
     const size = this.tileSize
     const g = new Graphics()
 

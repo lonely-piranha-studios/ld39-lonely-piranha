@@ -64,9 +64,9 @@ export default class MapGenerator {
       collision,
       objects: [
         {
-          x: (16*300) + 2,
-          y: (16*300) + 2,
-          type: 'rock'
+          x: 302,
+          y: 302,
+          type: 'rock',
         }
       ],
       tiles

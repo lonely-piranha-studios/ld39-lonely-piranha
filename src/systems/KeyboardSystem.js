@@ -33,10 +33,11 @@ export default class KeyboardSystem extends System {
 
     sprite.previousAnimationState = sprite.animationState
 
-    sprite.animationState = physic.vel.x === 0 ? sprite.previousAnimationState.split('-')[0] : (physic.vel.x < 0 ? 'west' : 'east')
+
+//    sprite.animationState = physic.vel.y === 0 ? sprite.animationState.split('-')[0] : (physic.vel.y < 0 ? 'north' : 'south')
     sprite.animationState += '-' + ((physic.vel.x === 0 && physic.vel.y === 0) ? 'rest' : 'run')
 
-    sprite.animationState = physic.vel.y === 0 ? sprite.animationState.split('-')[0] : (physic.vel.y < 0 ? 'north' : 'south')
+    sprite.animationState = physic.vel.x === 0 ? sprite.previousAnimationState.split('-')[0] : (physic.vel.x < 0 ? 'west' : 'east')
     sprite.animationState += '-' + ((physic.vel.x === 0 && physic.vel.y === 0) ? 'rest' : 'run')
 
     physic.vel.x = speed * d.x
