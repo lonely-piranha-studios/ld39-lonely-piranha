@@ -7,9 +7,6 @@ import Component from 'components'
 export default class Rock {
 
   static create (options) {
-    const x = options.x * this.tileSize
-    const y = options.y * this.tileSize
-
     const o = new Entity(null, [
       Component.Position,
       Component.Shape,
@@ -17,7 +14,7 @@ export default class Rock {
     ])
 
     o.updateComponents({
-      pos: { x: x, y: y },
+      pos: { x: options.x, y: options.y },
       shape: { width: this.tileSize, height: this.tileSize },
       sprite: { namespace: `tiles/${options.type}` },
     })
