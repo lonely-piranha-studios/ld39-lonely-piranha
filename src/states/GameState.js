@@ -9,6 +9,7 @@ import System from 'systems'
 import Component from 'components'
 import MapGenerator from 'world/MapGenerator'
 
+import mapList from 'assets/maps.json'
 
 export default class GameState extends State {
 
@@ -23,8 +24,9 @@ export default class GameState extends State {
 
   enter () {
     const map = this.mapGenerator.createMap({
-      debug: true,
-      tileset: new TileSet('tilesets/dungeon.png', this.sprite.resource.textures)
+      debug: !true,
+      tileset: new TileSet('tilesets/dungeon.png', this.sprite.resource.textures),
+      rooms: Object.values(mapList.maps)
     });
     this.viewPort.view(map.width * map.tileSize, map.height * map.tileSize)
     this.viewPort.zoomTo(4)

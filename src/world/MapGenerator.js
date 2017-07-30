@@ -186,7 +186,7 @@ export default class MapGenerator {
         this.mapCollide[xPos] = [];
       }
       this.mapCollide[xPos][yPos]
-        = 1; // read from map
+        = map.tiles ? map.tiles[ind] : 1; // read from map
     }
     let entries = [];
     if (map.entryTop) {
