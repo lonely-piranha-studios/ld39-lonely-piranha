@@ -4,6 +4,7 @@ import { autoDetectRenderer } from 'pixi'
 import { Keyboard } from 'core/input'
 import { ViewPort, TileSet } from 'core/gfx'
 import { State } from 'core/state'
+import Collision from 'core/collision'
 
 import System from 'systems'
 import Component from 'components'
@@ -24,6 +25,7 @@ export default class GameState extends State {
 
   enter () {
     this.ecs = new ECS()
+    this.world = new Collision.World({ grid_size: 500 })
     this.systems = this.initSystems(this.ecs)
 
     const map = this.mapGenerator.createMap({
@@ -45,7 +47,8 @@ export default class GameState extends State {
       Component.Sprite,
       Component.Keyboard,
       Component.Bar,
-      Component.Money
+      Component.Money,
+      Component.Interaction,
     ])
     entity.updateComponents({
       pos: {
@@ -70,6 +73,8 @@ export default class GameState extends State {
       right: ['right', 'd'],
     })
 
+    this.viewPort.moveToCenter(entity.components.pos.x, entity.components.pos.y)
+
     this.ecs.addEntity(entity)
   }
 
@@ -81,7 +86,8 @@ export default class GameState extends State {
       camera: new System.CameraSystem(this.viewPort),
       render: new System.RenderingSystem(this.viewPort, this.sprite),
       gui: new System.GUIRenderSystem(this.renderer, this.viewPort),
-      interact: new System.InteractSystem(this.viewPort),
+      collision: new System.CollisionSystem(this.world),
+      interact: new System.InteractSystem(this.viewPort, this.world),
     }
     Object.keys(systems).forEach((name) => {
       ecs.addSystem(systems[name])

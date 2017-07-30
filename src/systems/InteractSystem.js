@@ -32,9 +32,9 @@ export default class InteractSystem extends System {
     g.endFill()
     this.viewPort.add(g)
   }
-  
+
   update (entity) {
-    
+
   }
 
 }

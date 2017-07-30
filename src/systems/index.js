@@ -6,6 +6,7 @@ import MapSystem from './MapSystem'
 import GUIRenderSystem from './GUIRenderSystem'
 import RenderTownSystem from './RenderTownSystem'
 import InteractSystem from './InteractSystem'
+import CollisionSystem from './CollisionSystem'
 
 
 export default {
@@ -17,5 +18,6 @@ export default {
   GUIRenderSystem,
   RenderTownSystem,
   InteractSystem,
+  CollisionSystem,
 }
 
