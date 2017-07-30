@@ -48,6 +48,8 @@ export default class GameState extends State {
       },
       sprite: {
         namespace: 'character',
+        anchor: { x: 0, y: 0.5 },
+        animationSpeed: 0.1,
       }
     })
     entity.components.keyboard = new Keyboard({
