@@ -10,10 +10,9 @@ const initialState = {
 export default function player (state = initialState, action) {
   switch (action.type) {
     case RECHARGE:
-      return {
-        ...state,
+      return Object.assign({}, state, {
         power: action.payload,
-      }
+      })
 
     default:
       return state
