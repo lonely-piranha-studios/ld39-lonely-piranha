@@ -37,7 +37,7 @@ export default class Map {
       y: 302,
       data: {
         state: 'on-turning',
-        animationSpeed: 0.3
+        animationSpeed: 0.1
       }
     })
     for (let i = 0; i < this.objects.length; i++) {
