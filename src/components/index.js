@@ -6,7 +6,7 @@ import Sprite from './Sprite'
 import Camera from './Camera'
 import Bar from './Bar'
 import Money from './Money'
-
+import Interaction from './Interaction'
 
 
 export default {
@@ -17,5 +17,6 @@ export default {
   Sprite,
   Camera,
   Bar,
-  Money
+  Money,
+  Interaction
 }

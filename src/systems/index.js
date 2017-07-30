@@ -5,6 +5,7 @@ import CameraSystem from './CameraSystem'
 import MapSystem from './MapSystem'
 import GUIRenderSystem from './GUIRenderSystem'
 import RenderTownSystem from './RenderTownSystem'
+import InteractSystem from './InteractSystem'
 
 
 export default {
@@ -15,5 +16,6 @@ export default {
   MapSystem,
   GUIRenderSystem,
   RenderTownSystem,
+  InteractSystem,
 }
 

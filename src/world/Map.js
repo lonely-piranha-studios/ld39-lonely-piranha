@@ -1,7 +1,12 @@
 import collideAabbTilemap from 'collide-2d-aabb-tilemap'
 import MapChunkLoader from './MapChunkLoader'
 
-import { Lever, Rock, Chest } from '../entities'
+import {
+  Chest,
+  FloorSpike,
+  Lever,
+  Rock,
+} from '../entities'
 import Component from 'components'
 
 
@@ -27,16 +32,17 @@ export default class Map {
     this.texture = test.texture
 
     this.objects.push({
-      type: 'lever',
+      type: 'floor_spike',
       x: 302,
       y: 302,
-      data: {state: 'on-idle'}
+      data: { state: 'on-idle' }
     })
     for (let i = 0; i < this.objects.length; i++) {
       const entity = {
-        'rock': Rock,
+        'floor_spike': FloorSpike,
         'lever': Lever,
         'chest': Chest,
+        'rock': Rock,
       }[this.objects[i].type]
 
       if (entity) {

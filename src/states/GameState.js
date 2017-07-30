@@ -81,6 +81,7 @@ export default class GameState extends State {
       camera: new System.CameraSystem(this.viewPort),
       render: new System.RenderingSystem(this.viewPort, this.sprite),
       gui: new System.GUIRenderSystem(this.renderer, this.viewPort),
+      interact: new System.InteractSystem(this.viewPort),
     }
     Object.keys(systems).forEach((name) => {
       ecs.addSystem(systems[name])
