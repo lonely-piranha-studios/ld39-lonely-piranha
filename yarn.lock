@@ -4178,6 +4178,10 @@ spritesmith@~3.1.0:
     semver "~5.0.3"
     through2 "~2.0.0"
 
+sscd@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/sscd/-/sscd-1.5.1.tgz#c9cd502d23564b9c85d52f439b0f58a6ef38e4f7"
+
 sshpk@^1.7.0:
   version "1.13.1"
   resolved "https://registry.yarnpkg.com/sshpk/-/sshpk-1.13.1.tgz#512df6da6287144316dc4c18fe1cf1d940739be3"

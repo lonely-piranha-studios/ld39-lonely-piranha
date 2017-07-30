@@ -5,20 +5,21 @@ const MOUSE_UP   = 1 << 0
 const MOUSE_DOWN = 1 << 1
 const MOUSE_MOVE = 1 << 2
 
+const Buttons = [
+  'left',
+  'middle',
+  'right',
+]
+
 export default class Mouse {
 
-  constructor (actions) {
+  constructor () {
     this._actionBuffer = new CircularBuffer(20)
-    this._state = {
-      position: {
-        x: 0, y: 0,
-      },
+    this.position = {
+      x: 0, y: 0,
     }
+    this._state = {}
     this._bindings = {}
-
-    if (actions) {
-      this.bindActions(actions)
-    }
 
     document.addEventListener('contextmenu', this._onDown.bind(this), false);
     document.addEventListener('mousemove',   this._onMove.bind(this), false);
@@ -26,10 +27,16 @@ export default class Mouse {
     document.addEventListener('mouseup',     this._onUp.bind(this),   false);
   }
 
+  dispose () {
+    document.removeEventListener('contextmenu', this._onDown.bind(this));
+    document.removeEventListener('mousemove',   this._onMove.bind(this));
+    document.removeEventListener('mousedown',   this._onDown.bind(this));
+    document.removeEventListener('mouseup',     this._onUp.bind(this));
+  }
+
   _onMove (e) {
     this._actionBuffer.enq({
-      type: MOUSE_MOVE,
-      value: {
+      position: {
         x: e.pageX,
         y: e.pageY,
       },
@@ -37,42 +44,81 @@ export default class Mouse {
   }
 
   _onDown (e) {
+    if (e.button === 2) {
+      e.preventDefault()
+    }
     this._actionBuffer.enq({
-      type: MOUSE_DOWN,
-      value: e.button,
+      button: Buttons[e.button] || e.button,
+      value: true,
+      position: {
+        x: e.pageX,
+        y: e.pageY,
+      }
     })
   }
 
   _onUp (e) {
     this._actionBuffer.enq({
-      type: MOUSE_UP,
-      value: e.button,
+      button: Buttons[e.button] || e.button,
+      value: false,
+      position: {
+        x: e.pageX,
+        y: e.pageY,
+      }
     })
   }
 
   getState () {
     const state = this._state
 
-    while (this._actionBuffer.size()) {
-      const { type, value } = this._actionBuffer.deq() || {}
+    for (let key in state) {
+      if (state[key].released) {
+        state[key].down = false
+      }
+      state[key].pressed = false
+      state[key].released = false
     }
-  }
 
-  bindAction (action, button) {
+    while (this._actionBuffer.size()) {
+      const { position, button, value } = this._actionBuffer.deq() || {}
+
+      if (position) {
+        this.position.x = position.x
+        this.position.y = position.y
+      }
+      if (button) {
+        const action = state[button] = state[button] || {}
+
+        action.pressed = !!action.pressed || (!action.down && !!value)
+        action.down = !!action.down || !!value
+        action.released = !!action.released || !value
+      }
+    }
+
     return this
   }
 
-  bindActions (actions) {
-    return this.bindAction(actions)
+  down (button) {
+    const fbutton = String(button).toLowerCase()
+    return (this._state[fbutton] && this._state[fbutton].down) || false
   }
 
-  down () {
+  pressed (button) {
+    const fbutton = String(button).toLowerCase()
+    return (this._state[fbutton] && this._state[fbutton].pressed) || false
   }
 
-  pressed () {
+  released (button) {
+    const fbutton = String(button).toLowerCase()
+    return (this._state[fbutton] && this._state[fbutton].released) || false
   }
 
-  released () {
+  get x () {
+    return this.position.x
+  }
+
+  get y () {
+    return this.position.y
   }
 
 }

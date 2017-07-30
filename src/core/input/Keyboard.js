@@ -18,6 +18,11 @@ export default class Keyboard {
     document.addEventListener('keyup',   this._onKeyUp.bind(this),   false)
   }
 
+  dispose () {
+    document.removeEventListener('keydown', this._onKeyDown.bind(this))
+    document.removeEventListener('keyup',   this._onKeyUp.bind(this))
+  }
+
   _onKeyDown (evt) {
     this._actionBuffer.enq({
       code: evt.keyCode,
