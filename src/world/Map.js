@@ -45,6 +45,8 @@ export default class Map {
       type: 'fire',
       x: 303,
       y: 302,
+      w: 8,
+      h: 8,
       data: {
         state: 'burning',
         animationSpeed: 0.1
@@ -60,11 +62,12 @@ export default class Map {
       }[this.objects[i].type]
 
       if (entity) {
-        const objectData = Object.assign({}, this.objects[i], {
-          x: this.objects[i].x * this.tileSize,
-          y: this.objects[i].y * this.tileSize,
+        const objectData = Object.assign({
           w: this.tileSize,
           h: this.tileSize,
+        }, this.objects[i], {
+          x: this.objects[i].x * this.tileSize,
+          y: this.objects[i].y * this.tileSize,
         })
 
         const object = entity.create(objectData)

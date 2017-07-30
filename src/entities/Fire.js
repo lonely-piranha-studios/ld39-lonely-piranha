@@ -18,6 +18,7 @@ export default class Fire {
       shape: { width: options.w, height: options.h },
       sprite: {
         namespace: `tiles/${options.type}`,
+        scale: { x: 0.5, y: 0.5 },
         animationState: options.data.state,
         animationSpeed: options.data.animationSpeed,
       },
