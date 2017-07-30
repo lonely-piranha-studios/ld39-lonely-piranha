@@ -10,7 +10,7 @@ export default class GameState extends State {
 
 		this.renderer = game.renderer
 
-		this.g = new Container()
+		this.container = new Container()
 
 
 		const clickHere = new PIXI.Text('Click to Start Game!', new PIXI.TextStyle({fontSize: 48, stroke: '#4aff50', fill: ['#ff00ff', '#00ff99']}))
@@ -29,9 +29,9 @@ export default class GameState extends State {
 		creditsISPY.y = 9*this.renderer.height/10
 		creditsISPY.anchor.x = 0.5
 
-		this.g.addChild(clickHere)
-		this.g.addChild(credits)
-		this.g.addChild(creditsISPY)
+		this.container.addChild(clickHere)
+		this.container.addChild(credits)
+		this.container.addChild(creditsISPY)
 
 		document.body.onclick = () => {
 			game.states.setState('game')
@@ -41,7 +41,7 @@ export default class GameState extends State {
 
 	tick() {
 		this.renderer.clear(0x556677)
-		this.renderer.render(this.g)
+		this.renderer.render(this.container)
 
 	}
 }
