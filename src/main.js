@@ -22,7 +22,6 @@ class Game {
     this.states.addState('loading', new State.LoadingState(this))
     this.states.addState('splash', new State.SplashState(this))
     this.states.addState('menu', new State.MenuState(this))
-    this.states.addState('game', new State.GameState(this))
     this.states.addState('town', new State.TownState(this))
     this.states.addState('gameover', new State.GameOverState(this))
 

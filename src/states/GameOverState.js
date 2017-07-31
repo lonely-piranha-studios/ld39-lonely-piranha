@@ -1,7 +1,7 @@
 import { State } from 'core/state'
 import { ViewPort } from 'core/gfx'
 import ECS from 'ecs'
-import { Container,Text, TextStyle, Graphics } from 'pixi'
+import { Container, Graphics, Text, TextStyle } from 'pixi'
 
 
 export default class GameOverState extends State {

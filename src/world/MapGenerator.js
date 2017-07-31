@@ -22,7 +22,7 @@ export default class MapGenerator {
 
   createMap(config) {
     this.ecs = config.ecs
-    this.mapRadius = config.mapRadius || this.mapRadius;
+    this.mapRadius = config.mapRadius || this.mapRadius;
     this.mapCollide = [];
     this.mapTiles = [];
     this.mapObjects = [];
