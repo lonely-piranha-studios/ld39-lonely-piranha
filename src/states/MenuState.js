@@ -5,7 +5,7 @@ import ECS from 'ecs'
 import { Container, Graphics } from 'pixi'
 
 
-export default class GameState extends State {
+export default class MenuState extends State {
   constructor (game) {
     super()
 

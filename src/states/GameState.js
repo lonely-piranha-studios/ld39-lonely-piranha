@@ -20,6 +20,7 @@ export default class GameState extends State {
     this.renderer = game.renderer
     this.viewPort = new ViewPort(this.renderer)
     this.sprite = game.sprite
+    this.states = game.states
     this.mapGenerator = new MapGenerator()
   }
 
@@ -88,6 +89,7 @@ export default class GameState extends State {
       gui: new System.GUIRenderSystem(this.renderer, this.viewPort),
       collision: new System.CollisionSystem(this.world),
       interact: new System.InteractSystem(this.viewPort, this.world),
+      fuel: new System.FuelSystem(this.states)
     }
     Object.keys(systems).forEach((name) => {
       ecs.addSystem(systems[name])

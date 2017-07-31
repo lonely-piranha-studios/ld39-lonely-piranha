@@ -3,6 +3,7 @@ import LoadingState from './LoadingState'
 import MenuState from './MenuState'
 import SplashState from './SplashState'
 import TownState from './TownState'
+import GameOverState from './GameOverState'
 
 
 export default {
@@ -11,5 +12,6 @@ export default {
   MenuState,
   SplashState,
   TownState,
+  GameOverState,
 }
 
