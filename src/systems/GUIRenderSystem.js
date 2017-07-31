@@ -9,9 +9,9 @@ export default class GUIRenderSystem extends System {
     this.height = 20
     this.x = 20
     this.y = 20
+    this.fuelBarScale = 3
     this.fuelColor = 0x44ff44
     this.borderColor = 0x000000
-    this.barScale = 3
 
     this.backgroundGraphic = new Graphics()
     this.foregroundGraphic = new Graphics()
@@ -22,13 +22,13 @@ export default class GUIRenderSystem extends System {
     return ['bar', 'money'].every(comp => entity.components.hasOwnProperty(comp))
   }
 
-  renderBar (maxValue, currentValue) {
+  renderFuelBar (maxValue, currentValue) {
     const bg = this.backgroundGraphic
     const fg = this.foregroundGraphic
     const x = this.x + this.viewPort.position.x * this.viewPort.zoom
     const y = this.y + this.viewPort.position.y * this.viewPort.zoom
-    const max = maxValue * this.barScale
-    const current = currentValue * this.barScale
+    const max = maxValue * this.fuelBarScale
+    const current = currentValue * this.fuelBarScale
 
     bg.clear()
     bg.beginFill(this.fuelColor)
@@ -51,7 +51,7 @@ export default class GUIRenderSystem extends System {
 
   enter (entity) {
     const { maxValue, currentValue } = entity.components.bar
-    this.renderBar(maxValue, currentValue)
+    this.renderFuelBar(maxValue, currentValue)
     this.renderMoneyCounter(entity.components.money.amount)
 
     this.stage = new Container()
@@ -67,7 +67,7 @@ export default class GUIRenderSystem extends System {
   update (entity) {
     const { maxValue, currentValue } = entity.components.bar
     const { amount } = entity.components.money
-    this.renderBar(maxValue, currentValue)
+    this.renderFuelBar(maxValue, currentValue)
     this.renderMoneyCounter(amount)
   }
 }
