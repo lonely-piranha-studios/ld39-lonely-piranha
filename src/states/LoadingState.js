@@ -15,6 +15,7 @@ export default class LoadingState extends State {
   constructor (game) {
     super()
 
+    this.initialized = false
     game.ecs = new ECS()
     game.viewPort = this.viewPort = new ViewPort(game.renderer)
     game.sprite = this.sprite = new Sprite('atlas', '/assets/spriteatlas.json')
@@ -24,6 +25,7 @@ export default class LoadingState extends State {
 
       const map = new MapGenerator().createMap({
         ecs: game.ecs,
+        states: game.states,
         debug: true,
         tileset: new TileSet('tilesets/dungeon.png', game.sprite.resource.textures),
         rooms: Object.values(mapList.maps)
@@ -34,6 +36,7 @@ export default class LoadingState extends State {
       // SMELL: tried doing some asynchronous promise stuff but got too tired.
       // this setTimeout seems to have magically solved it though???
       setTimeout(() => {
+        this.initialized = true
         game.states.addState('game', new GameState(game))
         game.states.setState('game')
       }, 0)
@@ -58,6 +61,10 @@ export default class LoadingState extends State {
   }
 
   enter () {
+    if (this.initialized) {
+      console.log('switching to game state')
+      return this.states.setState('game')
+    }
     this.sprite.load()
   }
 
