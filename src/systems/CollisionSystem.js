@@ -30,8 +30,6 @@ export default class CollisionSystem extends System {
     entity.updateComponent('interaction', {
       collisionShape: this.world.add(collisionShape)
     })
-
-    console.log(entity)
   }
 
   update (entity) {

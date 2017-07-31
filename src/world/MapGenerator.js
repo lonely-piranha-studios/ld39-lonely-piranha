@@ -67,8 +67,6 @@ export default class MapGenerator {
       tiles
     }, this.tileset, this.ecs);
 
-    console.log(this.mapObjects);
-
     return map;
   }
 

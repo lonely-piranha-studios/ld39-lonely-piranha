@@ -14,7 +14,6 @@ import Component from 'components'
 export default class Map {
 
   constructor (data, tileSet, ecs) {
-    console.log(tileSet)
     if (data) {
       this.init(data, tileSet, ecs)
     }
