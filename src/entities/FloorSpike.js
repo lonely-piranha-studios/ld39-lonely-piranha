@@ -25,6 +25,13 @@ export default class FloorSpike {
       interaction: {
         x: [0, 0],
         y: [0, 0],
+        onInteraction: (entityId) => {
+          const player = options.ecs.entities.find(({ id }) => id === entityId)
+
+          if (player.components.bar.currentValue) {
+            player.components.bar.currentValue--
+          }
+        }
       }
     })
     return o

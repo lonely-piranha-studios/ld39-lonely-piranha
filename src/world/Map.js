@@ -67,6 +67,7 @@ export default class Map {
         }, this.objects[i], {
           x: this.objects[i].x * this.tileSize,
           y: this.objects[i].y * this.tileSize,
+          ecs
         })
 
         const object = entity.create(objectData)
