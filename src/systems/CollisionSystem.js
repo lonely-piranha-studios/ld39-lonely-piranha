@@ -30,6 +30,8 @@ export default class CollisionSystem extends System {
     entity.updateComponent('interaction', {
       collisionShape: this.world.add(collisionShape)
     })
+    // SMELL: haxx property onto collisionShape
+    entity.components.interaction.collisionShape.entityId = entity.id
   }
 
   update (entity) {
@@ -39,7 +41,7 @@ export default class CollisionSystem extends System {
       const collide_with = this.world.pick_object(interaction.collisionShape)
 
       if (collide_with && interaction.onInteraction) {
-        interaction.onInteraction(collide_with)
+        interaction.onInteraction(collide_with.entityId)
       }
 
       interaction.collisionShape.set_position({
